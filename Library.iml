@@ -22,6 +22,7 @@
           <file>file://$MODULE_DIR$/web/WEB-INF/spring-config.xml</file>
           <file>file://$MODULE_DIR$/web/WEB-INF/applicationContext.xml</file>
           <file>file://$MODULE_DIR$/web/WEB-INF/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/web/WEB-INF/config.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -33,11 +34,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/web/WEB-INF" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="ojdbc14-10.2.0.2" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.35" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.1.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.1.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.1.5.RELEASE" level="project" />
