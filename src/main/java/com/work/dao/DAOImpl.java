@@ -10,19 +10,19 @@ import java.util.List;
  */
 public class DAOImpl implements DAO {
     private Connection connection = null;
-    private final String url = "jdbc:oracle:thin:@//192.168.3.90:1521/SOA11G";
-    private final String user = "soatest";
-    private final String password = "soatest";
+    private final String url = "jdbc:mysql://176.37.217.24:3306/zhenya_test1";
+    private final String user = "quattro";
+    private final String password = "Zhenya2015";
 
     public DAOImpl(){
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery("SELECT NAME FROM SOATEST.BOOKS");
+            ResultSet rs = statement.executeQuery("SELECT first_name FROM USERS");
             while(rs.next()){
-                String name = rs.getString("NAME");
+                String name = rs.getString("first_name");
                 //String author = rs.getString("AUTHOR");
 
                 System.out.print(name);
