@@ -13,6 +13,7 @@
       <column name="author" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="year" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="pages" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="busy" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
       <primary-key name="PRIMARY" columns="book_id"/>
       <exported-key name="BOOKS_book_id_fk" table="USERS" schema="" catalog="zhenya_test1" columns="book_id"/>
     </table>
