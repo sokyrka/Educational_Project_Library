@@ -7,7 +7,9 @@ import com.work.common.User;
  */
 public class Main {
     public static void main(String[] args) {
-        DAOImpl dao = new DAOImpl();
-
+        UserDAOImpl userDAO = new UserDAOImpl();
+        //userDAO.addUser("Eugine", "Sokirka", "admin", "admin", 2);
+        User user = userDAO.getUser();
+        System.out.println(user.getFirst_name());
     }
 }
