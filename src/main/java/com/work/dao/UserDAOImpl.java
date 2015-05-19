@@ -88,13 +88,34 @@ public class UserDAOImpl implements UserDAO{
     public boolean deleteUser(String first_name, String second_name) {
         boolean res = false;
         try {
-            String sqlQuery = "DELETE FROM USERS WHERE first_name = ? AND second_name= ?";
+            String sqlQuery = "DELETE FROM USERS WHERE first_name = ? AND second_name = ?";
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, pass);
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, first_name);
             preparedStatement.setString(2, second_name);
             res = preparedStatement.execute();
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @Override
+    public boolean validateUser(String login, String password){
+        boolean res = false;
+        try {
+            String sqlQuery = "SELECT * FROM USERS";
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url,username,pass);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()){
+                if(resultSet.getString("login").equals(login) && resultSet.getString("password").equals(password)){
+                    res = true;
+                }
+            }
             connection.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

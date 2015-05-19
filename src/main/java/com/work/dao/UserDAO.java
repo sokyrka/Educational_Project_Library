@@ -10,4 +10,5 @@ public interface UserDAO {
     User getUser();
     void updateUser();
     boolean deleteUser(String first_name, String second_name);
+    boolean validateUser(String login, String password);
 }
