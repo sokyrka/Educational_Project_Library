@@ -5,7 +5,6 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
-    <context:annotation-config/>
     <context:component-scan base-package="com.work.controller"/>
 
     <mvc:annotation-driven/>
@@ -16,22 +15,5 @@
     </bean>
 
     <mvc:default-servlet-handler/>
-
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
-        <property name="url" value="jdbc:mysql://176.37.217.24:3306/zhenya_test1"/>
-        <property name="username" value="quattro"/>
-        <property name="password" value="Zhenya2015"/>
-    </bean>
-
-    <bean id="daoImpl" class="com.work.dao.DAOImpl">
-        <constructor-arg name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
-        <constructor-arg ref="dataSourse"/>
-    </bean>
-
-    <jdbc:embedded-database id="dataSourse"/>
 
 </beans>

@@ -1,27 +1,28 @@
 package com.work.dao;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by Eugine Sokirka on 18.05.2015.
  */
 public class DAOImpl  {
-    private DataSource dataSource;
+    private final String url = "jdbc:mysql://176.37.217.24:3306/zhenya_test1";
+    private final String user = "quattro";
+    private final String pass = "Zhenya2015";
+    private Connection connection = null;
 
-    public DAOImpl(DataSource dataSource){
-        this.dataSource = dataSource;
-    }
-
-    public void get(){
-        Connection connection = null;
-
+    public DAOImpl(){
         try {
-            connection = dataSource.getConnection();
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url, user, pass);
+            Statement statement = connection.createStatement();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
 }
