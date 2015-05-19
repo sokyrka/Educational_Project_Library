@@ -40,9 +40,7 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.setInt(5, user.getBook_id());
             preparedStatement.execute();
             connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -69,9 +67,7 @@ public class UserDAOImpl implements UserDAO{
                 book_id = resultSet.getInt("book_id");
             }
             connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return new User.Builder()
@@ -100,9 +96,7 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.setString(2, second_name);
             res = preparedStatement.execute();
             connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return res;

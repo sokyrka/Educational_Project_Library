@@ -11,6 +11,14 @@
     <title></title>
 </head>
 <body>
-<h1>Test</h1>
+<form action="${pageContext.request.contextPath}/success.html" method="get">
+  <input type="text" name="first_name"><br><br>
+  <input type="text" name="second_name"><br><br>
+  <input type="text" name="login"><br><br>
+  <input type="text" name="password"><br><br>
+  <input type="text" name="book_id"><br><br>
+  <input type="submit" value="Add">
+  <h3 style="color: red">${msg}</h3>
+</form>
 </body>
 </html>
