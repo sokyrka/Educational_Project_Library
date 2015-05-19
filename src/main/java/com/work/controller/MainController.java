@@ -15,10 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class MainController {
     private UserDAOImpl userDAO = new UserDAOImpl();
 
-    @RequestMapping(value = "/welcomePage.html", method = RequestMethod.GET)
-    public ModelAndView welcomePage(){
-        ModelAndView modelAndView = new ModelAndView("welcomePage");
-        return modelAndView;
+    @RequestMapping(value = "/welcomePage.html")
+    public String welcomePage(){
+        return "welcomePage";
     }
 
     @RequestMapping(value = "/userCabinet.html", method = RequestMethod.POST)
@@ -28,60 +27,16 @@ public class MainController {
         if(userDAO.validateUser(login, password)){
             modelAndView = new ModelAndView("userCabinet");
         }else{
-            modelAndView = new ModelAndView("welcomePage");
-            modelAndView.addObject("msg","wrong");
+            modelAndView = new ModelAndView("redirect:/welcomePage.html");
+            modelAndView.addObject("msg","Incorrect login");
         }
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/registerPage.html", method = RequestMethod.POST)
-    public ModelAndView registerPage(){
-        ModelAndView modelAndView = new ModelAndView("registerPage");
-        return modelAndView;
+    @RequestMapping(value = "/registerPage.html")
+    public String registerPage(){
+        return "registerPage";
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @RequestMapping(value = "/form.html", method = RequestMethod.GET)
-    public ModelAndView getForm(){
-        ModelAndView modelAndView = new ModelAndView("Form");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/success.html", method = RequestMethod.GET)
-    public ModelAndView successForm(@RequestParam("first_name") String first_name,
-                                    @RequestParam("second_name") String second_name,
-                                    @RequestParam("login") String login,
-                                    @RequestParam("password") String password,
-                                    @RequestParam("book_id") int book_id){
-
-        userDAO.addUser(first_name, second_name, login, password, book_id);
-        ModelAndView modelAndView = new ModelAndView("Success");
-        modelAndView.addObject("msg", "Success");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/deleteForm.html", method = RequestMethod.GET)
-    public ModelAndView deleteForm(@RequestParam("first_name") String first_name,
-                                   @RequestParam("second_name") String second_name){
-        userDAO.deleteUser(first_name, second_name);
-        ModelAndView modelAndView = new ModelAndView();
-        return modelAndView;
-    }
 }
