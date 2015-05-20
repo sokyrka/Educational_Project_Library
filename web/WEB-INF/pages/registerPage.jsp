@@ -45,7 +45,8 @@
       <input type="text" name="second_name"><br><br>
       <input type="text" name="login"><br><br>
       <input type="text" name="password"><br><br>
-      <input type="submit" value="Register">
+      <input type="submit" value="Register"><br><br>
+      ${msg}
     </form>
   </div>
 </div>

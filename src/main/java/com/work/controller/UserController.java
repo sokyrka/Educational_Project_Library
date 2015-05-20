@@ -24,9 +24,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userCabinet.html", method = RequestMethod.POST)
-    public ModelAndView userCabinet(@RequestParam("login") String login,
-                                    @RequestParam("password") String password){
-        ModelAndView modelAndView = null;
+     public ModelAndView userCabinet(@RequestParam("login") String login,
+                                     @RequestParam("password") String password){
+        ModelAndView modelAndView;
         if(userDAO.validateUser(login, password)){
             modelAndView = new ModelAndView("userCabinet");
         }else{
@@ -43,17 +43,25 @@ public class UserController {
     }
 
     @RequestMapping(value = "/successRegister.html", method = RequestMethod.POST)
-    public String successRegister(@RequestParam("first_name") String first_name,
+    public ModelAndView successRegister(@RequestParam("first_name") String first_name,
                                   @RequestParam("second_name") String second_name,
                                   @RequestParam("login") String login,
                                   @RequestParam("password") String password){
+        ModelAndView modelAndView;
         if(!first_name.isEmpty() && !second_name.isEmpty() && !login.isEmpty() && !password.isEmpty()){
             if(!userDAO.validateUser(login, password)){
                 userDAO.addUser(first_name, second_name, login, password);
-                return "userCabinet";
+                modelAndView = new ModelAndView("userCabinet");
+
+            }else {
+                modelAndView = new ModelAndView("registerPage");
+                modelAndView.addObject("msg", "Such user already exists");
             }
+        }else {
+            modelAndView = new ModelAndView("registerPage");
+            modelAndView.addObject("msg", "Incorrect information");
         }
-        return "registerPage";
+        return modelAndView;
     }
 
     @RequestMapping(value = "/freeBooks.html")
