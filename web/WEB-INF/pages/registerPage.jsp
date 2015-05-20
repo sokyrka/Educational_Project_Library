@@ -40,7 +40,7 @@
     <p>Password</p>
   </div>
   <div id="form">
-    <form action="${pageContext.request.contextPath}/userCabinet.html" method="post">
+    <form action="${pageContext.request.contextPath}/successRegister.html" method="post">
       <input type="text" name="first_name"><br><br>
       <input type="text" name="second_name"><br><br>
       <input type="text" name="login"><br><br>

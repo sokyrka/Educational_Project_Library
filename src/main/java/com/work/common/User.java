@@ -8,14 +8,12 @@ public class User {
     private final String second_name;
     private final String login;
     private final String password;
-    private final int book_id;
 
     private User(Builder builder){
         this.first_name = builder.first_name;
         this.second_name = builder.second_name;
         this.login = builder.login;
         this.password = builder.password;
-        this.book_id = builder.book_id;
     }
 
     public String getFirst_name() {
@@ -34,10 +32,6 @@ public class User {
         return password;
     }
 
-    public int getBook_id() {
-        return book_id;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,7 +39,6 @@ public class User {
 
         User user = (User) o;
 
-        if (book_id != user.book_id) return false;
         if (first_name != null ? !first_name.equals(user.first_name) : user.first_name != null) return false;
         if (second_name != null ? !second_name.equals(user.second_name) : user.second_name != null) return false;
         if (login != null ? !login.equals(user.login) : user.login != null) return false;
@@ -59,7 +52,6 @@ public class User {
         result = 31 * result + (second_name != null ? second_name.hashCode() : 0);
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + book_id;
         return result;
     }
 
@@ -68,7 +60,6 @@ public class User {
         private String second_name;
         private String login;
         private String password;
-        private int book_id;
 
         public Builder(){}
 
@@ -76,8 +67,6 @@ public class User {
             this.first_name = user.first_name;
             this.second_name = user.second_name;
             this.login = user.login;
-            this.password = user.password;
-            this.book_id = user.book_id;
         }
 
         public Builder first_name(String first_name){
@@ -97,11 +86,6 @@ public class User {
 
         public Builder password(String password){
             this.password = password;
-            return this;
-        }
-
-        public Builder book_id(int book_id){
-            this.book_id = book_id;
             return this;
         }
 

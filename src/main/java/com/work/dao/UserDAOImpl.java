@@ -1,8 +1,11 @@
 package com.work.dao;
 
+import com.work.common.Book;
 import com.work.common.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Eugine Sokirka on 19.05.2015.
@@ -15,19 +18,18 @@ public class UserDAOImpl implements UserDAO{
     private Connection connection;
 
     @Override
-    public void addUser(String first_name, String second_name, String login, String password, int book_id) {
+    public void addUser(String first_name, String second_name, String login, String password) {
         User user = new User.Builder()
                 .first_name(first_name)
                 .second_name(second_name)
                 .login(login)
                 .password(password)
-                .book_id(book_id)
                 .build();
         try {
             String sqlQuery = "INSERT INTO USER " +
-                    "(first_name, second_name, login, password, book_id)" +
+                    "(first_name, second_name, login, password)" +
                     "VALUES" +
-                    "(?, ?, ?, ?, ?" +
+                    "(?, ?, ?, ?" +
                     ")";
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url,username,pass);
@@ -37,7 +39,6 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.setString(2, user.getSecond_name());
             preparedStatement.setString(3, user.getLogin());
             preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setInt(5, user.getBook_id());
             preparedStatement.execute();
             connection.close();
         } catch (SQLException | ClassNotFoundException e) {
@@ -51,7 +52,6 @@ public class UserDAOImpl implements UserDAO{
         String second_name = null;
         String login = null;
         String password = null;
-        int book_id = 0;
         try {
             String sqlQuery = "SELECT * FROM USER";
             Class.forName("com.mysql.jdbc.Driver");
@@ -64,7 +64,6 @@ public class UserDAOImpl implements UserDAO{
                 second_name = resultSet.getString("second_name");
                 login = resultSet.getString("login");
                 password = resultSet.getString("password");
-                book_id = resultSet.getInt("book_id");
             }
             connection.close();
         } catch (SQLException | ClassNotFoundException e) {
@@ -75,7 +74,6 @@ public class UserDAOImpl implements UserDAO{
                 .second_name(second_name)
                 .login(login)
                 .password(password)
-                .book_id(book_id)
                 .build();
     }
 
@@ -121,5 +119,34 @@ public class UserDAOImpl implements UserDAO{
             e.printStackTrace();
         }
         return res;
+    }
+
+    @Override
+    public List<Book> getAllFreeBook() {
+        List<Book> tmp = new ArrayList<Book>();
+        try {
+            String sqlQuery = "SELECT * FROM BOOK";
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url,username,pass);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+
+            while (resultSet.next()){
+                if(!resultSet.getBoolean("busy")){
+                    Book book = new Book.Builder()
+                            .title(resultSet.getString("title"))
+                            .author(resultSet.getString("author"))
+                            .year(resultSet.getInt("year"))
+                            .pages(resultSet.getInt("pages"))
+                            .build();
+                    tmp.add(book);
+                }
+
+            }
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return tmp;
     }
 }

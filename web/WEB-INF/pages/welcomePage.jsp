@@ -32,7 +32,6 @@
   </style>
 </head>
 <body>
-<h3>${msg}</h3>
 <div id="wrapper">
   <div id="names">
     <p>Login</p>
@@ -43,7 +42,8 @@
       <input type="text" name="login"><br><br>
       <input type="text" name="password"><br><br>
       <input type="submit" value="Sign in">
-      <button formaction="${pageContext.request.contextPath}/registerPage.html">Sign up</button>
+      <button formaction="${pageContext.request.contextPath}/registerPage.html">Sign up</button><br><br>
+      ${msg}
     </form>
   </div>
 </div>

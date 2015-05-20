@@ -12,5 +12,9 @@
 </head>
 <body>
 <h1>User cabinet</h1>
+<form>
+  <button formaction="${pageContext.request.contextPath}/freeBooks.html">All free books</button>
+</form>
+
 </body>
 </html>
