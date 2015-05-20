@@ -7,7 +7,7 @@
     </database-info>
     <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
     <schema name="" catalog="zhenya_test1"/>
-    <table name="BOOKS" schema="" catalog="zhenya_test1" type="TABLE">
+    <table name="BOOK" schema="" catalog="zhenya_test1" type="TABLE">
       <column name="book_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="title" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="author" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
@@ -15,18 +15,14 @@
       <column name="pages" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="busy" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
       <primary-key name="PRIMARY" columns="book_id"/>
-      <exported-key name="BOOKS_book_id_fk" table="USERS" schema="" catalog="zhenya_test1" columns="book_id"/>
     </table>
-    <table name="USERS" schema="" catalog="zhenya_test1" type="TABLE">
+    <table name="USER" schema="" catalog="zhenya_test1" type="TABLE">
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="first_name" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="second_name" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="login" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="password" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="book_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="user_id"/>
-      <foreign-key name="BOOKS_book_id_fk" columns="book_id" ref-table="BOOKS" ref-schema="" ref-catalog="zhenya_test1" ref-columns="book_id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <index name="BOOKS_book_id_fk" unique="false" columns="book_id"/>
     </table>
   </data-source>
 </component>

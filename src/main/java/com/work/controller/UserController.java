@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by Eugine Sokirka on 15.05.2015.
  */
 @Controller
-public class MainController {
+public class UserController {
     private UserDAOImpl userDAO = new UserDAOImpl();
 
     @RequestMapping(value = "/welcomePage.html")

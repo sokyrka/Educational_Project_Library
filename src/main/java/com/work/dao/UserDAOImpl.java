@@ -24,7 +24,7 @@ public class UserDAOImpl implements UserDAO{
                 .book_id(book_id)
                 .build();
         try {
-            String sqlQuery = "INSERT INTO USERS " +
+            String sqlQuery = "INSERT INTO USER " +
                     "(first_name, second_name, login, password, book_id)" +
                     "VALUES" +
                     "(?, ?, ?, ?, ?" +
@@ -53,7 +53,7 @@ public class UserDAOImpl implements UserDAO{
         String password = null;
         int book_id = 0;
         try {
-            String sqlQuery = "SELECT * FROM USERS";
+            String sqlQuery = "SELECT * FROM USER";
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url,username,pass);
             Statement statement = connection.createStatement();
@@ -88,7 +88,7 @@ public class UserDAOImpl implements UserDAO{
     public boolean deleteUser(String first_name, String second_name) {
         boolean res = false;
         try {
-            String sqlQuery = "DELETE FROM USERS WHERE first_name = ? AND second_name = ?";
+            String sqlQuery = "DELETE FROM USER WHERE first_name = ? AND second_name = ?";
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, pass);
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -106,7 +106,7 @@ public class UserDAOImpl implements UserDAO{
     public boolean validateUser(String login, String password){
         boolean res = false;
         try {
-            String sqlQuery = "SELECT * FROM USERS";
+            String sqlQuery = "SELECT * FROM USER";
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url,username,pass);
             Statement statement = connection.createStatement();
