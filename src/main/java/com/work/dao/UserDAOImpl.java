@@ -149,4 +149,30 @@ public class UserDAOImpl implements UserDAO{
         }
         return tmp;
     }
+
+    @Override
+    public Book findBook(String title) {
+        Book book = null;
+        try {
+            String sqlQuery = "SELECT * FROM BOOK WHERE title = ?";
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url,username,pass);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, title);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                book = new Book.Builder()
+                        .title(resultSet.getString("title"))
+                        .author(resultSet.getString("author"))
+                        .year(resultSet.getInt("year"))
+                        .pages(resultSet.getInt("pages"))
+                        .build();
+            }
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return book;
+    }
 }

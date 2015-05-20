@@ -15,6 +15,7 @@
       <column name="pages" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="busy" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
       <primary-key name="PRIMARY" columns="book_id"/>
+      <exported-key name="BOOK_book_id_fk" table="request" schema="" catalog="zhenya_test1" columns="book_id"/>
     </table>
     <table name="USER" schema="" catalog="zhenya_test1" type="TABLE">
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -23,6 +24,18 @@
       <column name="login" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="password" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="user_id"/>
+      <exported-key name="USER_user_id_fk" table="request" schema="" catalog="zhenya_test1" columns="user_id"/>
+    </table>
+    <table name="request" schema="" catalog="zhenya_test1" type="TABLE">
+      <column name="request_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="book_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="done" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <primary-key name="PRIMARY" columns="request_id"/>
+      <foreign-key name="BOOK_book_id_fk" columns="book_id" ref-table="BOOK" ref-schema="" ref-catalog="zhenya_test1" ref-columns="book_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="USER_user_id_fk" columns="user_id" ref-table="USER" ref-schema="" ref-catalog="zhenya_test1" ref-columns="user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="BOOK_book_id_fk" unique="false" columns="book_id"/>
+      <index name="USER_user_id_fk" unique="false" columns="user_id"/>
     </table>
   </data-source>
 </component>

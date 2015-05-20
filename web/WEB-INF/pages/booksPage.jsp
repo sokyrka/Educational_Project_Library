@@ -38,7 +38,7 @@
         <td><%=book.getAuthor()%></td>
         <td><%=book.getYear()%></td>
         <td><%=book.getPages()%></td>
-        <td><input type="checkbox" ></td>
+        <td><input type="checkbox"></td>
       </tr>
       <%}%>
       </table><br><br>

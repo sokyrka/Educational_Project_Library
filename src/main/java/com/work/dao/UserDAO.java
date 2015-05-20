@@ -15,4 +15,5 @@ public interface UserDAO {
     boolean deleteUser(String first_name, String second_name);
     boolean validateUser(String login, String password);
     List<Book> getAllFreeBook();
+    Book findBook(String title);
 }

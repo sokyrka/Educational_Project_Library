@@ -1,5 +1,6 @@
 package com.work.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.work.common.Book;
 import com.work.dao.UserDAOImpl;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ public class UserController {
         ModelAndView modelAndView;
         if(userDAO.validateUser(login, password)){
             modelAndView = new ModelAndView("userCabinet");
+            modelAndView.addObject("msg", login);
         }else{
             modelAndView = new ModelAndView("welcomePage");
             modelAndView.addObject("msg","Incorrect login or pass");
@@ -71,5 +73,22 @@ public class UserController {
         return "booksPage";
     }
 
+    @RequestMapping(value = "/findBook.html")
+    public String findBook(){
+        return "findBookForm";
+    }
 
+    @RequestMapping(value = "/successFindBook.html", method = RequestMethod.POST)
+    public String successFindBook(@RequestParam("title") String title, Model model){
+        String result;
+        Book book = userDAO.findBook(title);
+        if(!title.isEmpty() && book != null){
+            model.addAttribute("book", book);
+            result = "findedBook";
+        }else {
+            model.addAttribute("msg", "Not find");
+            result = "findBookForm";
+        }
+        return result;
+    }
 }

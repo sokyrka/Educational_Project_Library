@@ -8,13 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Cabinet</title>
 </head>
 <body>
-<h1>User cabinet</h1>
-<form>
-  <button formaction="${pageContext.request.contextPath}/freeBooks.html">All free books</button>
-</form>
-
+<h1>Hello ${msg}</h1>
+  <form>
+    <p>You can see all the available books</p>
+    <button formaction="${pageContext.request.contextPath}/freeBooks.html">Free books</button>
+    <p>You can find any book by title</p>
+    <button formaction="${pageContext.request.contextPath}/findBook.html">Find book</button>
+    <p>You can see the list of books that you have now</p>
+    <button formaction="${pageContext.request.contextPath}/freeBooks.html">My book</button>
+  </form>
 </body>
 </html>
