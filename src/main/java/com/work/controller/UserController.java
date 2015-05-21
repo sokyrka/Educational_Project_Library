@@ -1,6 +1,5 @@
 package com.work.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.work.common.Book;
 import com.work.dao.UserDAOImpl;
 import org.springframework.stereotype.Controller;
@@ -25,8 +24,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userCabinet.html", method = RequestMethod.POST)
-     public ModelAndView userCabinet(@RequestParam("login") String login,
-                                     @RequestParam("password") String password){
+    public ModelAndView userCabinet(@RequestParam("login") String login,
+                                    @RequestParam("password") String password){
         ModelAndView modelAndView;
         if(userDAO.validateUser(login, password)){
             modelAndView = new ModelAndView("userCabinet");
@@ -35,7 +34,6 @@ public class UserController {
             modelAndView = new ModelAndView("welcomePage");
             modelAndView.addObject("msg","Incorrect login or pass");
         }
-
         return modelAndView;
     }
 
@@ -46,15 +44,14 @@ public class UserController {
 
     @RequestMapping(value = "/successRegister.html", method = RequestMethod.POST)
     public ModelAndView successRegister(@RequestParam("first_name") String first_name,
-                                  @RequestParam("second_name") String second_name,
-                                  @RequestParam("login") String login,
-                                  @RequestParam("password") String password){
+                                        @RequestParam("second_name") String second_name,
+                                        @RequestParam("login") String login,
+                                        @RequestParam("password") String password){
         ModelAndView modelAndView;
         if(!first_name.isEmpty() && !second_name.isEmpty() && !login.isEmpty() && !password.isEmpty()){
             if(!userDAO.validateUser(login, password)){
                 userDAO.addUser(first_name, second_name, login, password);
                 modelAndView = new ModelAndView("userCabinet");
-
             }else {
                 modelAndView = new ModelAndView("registerPage");
                 modelAndView.addObject("msg", "Such user already exists");
@@ -70,24 +67,24 @@ public class UserController {
     public String getAllFreeBooks(Model model){
         List<Book> bookList = userDAO.getAllFreeBook();
         model.addAttribute("books", bookList);
-        return "booksPage";
+        return "allBooks";
     }
 
     @RequestMapping(value = "/findBook.html")
     public String findBook(){
-        return "findBookForm";
+        return "findBook";
     }
 
-    @RequestMapping(value = "/successFindBook.html", method = RequestMethod.POST)
-    public String successFindBook(@RequestParam("title") String title, Model model){
+    @RequestMapping(value = "/foundBook.html", method = RequestMethod.POST)
+    public String foundBook(@RequestParam("title") String title, Model model){
         String result;
         Book book = userDAO.findBook(title);
         if(!title.isEmpty() && book != null){
             model.addAttribute("book", book);
-            result = "findedBook";
+            result = "foundBook";
         }else {
             model.addAttribute("msg", "Not find");
-            result = "findBookForm";
+            result = "findBook";
         }
         return result;
     }

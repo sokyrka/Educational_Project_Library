@@ -37,7 +37,7 @@
       <p>Title</p>
     </div>
     <div id="form">
-      <form action="${pageContext.request.contextPath}/successFindBook.html" method="post">
+      <form action="${pageContext.request.contextPath}/foundBook.html" method="post">
         <input type="text" name="title"><br><br>
         <input type="submit" value="Find"><br><br>
         ${msg}
