@@ -17,4 +17,6 @@ public interface UserDAO {
     List<Book> getAllFreeBook();
 
     Book findBook(String title);
+
+    //boolean addRequest(String title);
 }

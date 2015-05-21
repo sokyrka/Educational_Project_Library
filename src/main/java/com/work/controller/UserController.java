@@ -6,11 +6,9 @@ import com.work.service.UserService;
 import com.work.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -28,11 +26,13 @@ public class UserController {
 
     @RequestMapping(value = "/userCabinet.html", method = RequestMethod.POST)
     public ModelAndView userCabinet(@RequestParam("login") String login,
-                                    @RequestParam("password") String password){
+                                    @RequestParam("password") String password,
+                                    HttpSession session){
         ModelAndView modelAndView;
         if(userService.validateUser(login, password)){
             modelAndView = new ModelAndView("userCabinet");
             modelAndView.addObject("msg", login);
+            session.setAttribute("user_login", login);
         }else{
             modelAndView = new ModelAndView("welcomePage");
             modelAndView.addObject("msg","Incorrect login or pass");
@@ -49,12 +49,14 @@ public class UserController {
     public ModelAndView successRegister(@RequestParam("first_name") String first_name,
                                         @RequestParam("second_name") String second_name,
                                         @RequestParam("login") String login,
-                                        @RequestParam("password") String password){
+                                        @RequestParam("password") String password,
+                                        HttpSession session){
         ModelAndView modelAndView;
         if(!first_name.isEmpty() && !second_name.isEmpty() && !login.isEmpty() && !password.isEmpty()){
             if(!userService.validateUser(login, password)){
                 userService.addUser(first_name, second_name, login, password);
                 modelAndView = new ModelAndView("userCabinet");
+                session.setAttribute("user_login", login);
             }else {
                 modelAndView = new ModelAndView("registerPage");
                 modelAndView.addObject("msg", "Such user already exists");
@@ -90,5 +92,14 @@ public class UserController {
             result = "findBook";
         }
         return result;
+    }
+
+    @RequestMapping(value = "/addedBook.html", method = RequestMethod.POST)
+    public ModelAndView successfulAddedBook(HttpSession session){
+
+        ModelAndView modelAndView = new ModelAndView("successfulAddedBook");
+        modelAndView.addObject("msg", session.getAttribute("user_login"));
+
+        return modelAndView;
     }
 }

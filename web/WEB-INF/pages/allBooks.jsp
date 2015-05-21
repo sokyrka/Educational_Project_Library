@@ -15,7 +15,7 @@
     <title>Free Books</title>
 </head>
 <body>
-  <form>
+  <form action="${pageContext.request.contextPath}/addedBook.html" method="post">
     <table style="border: 1px solid; width: 500px; text-align:center">
       <thead style="background:#22ff1f">
       <tr>
@@ -38,10 +38,11 @@
         <td><%=book.getAuthor()%></td>
         <td><%=book.getYear()%></td>
         <td><%=book.getPages()%></td>
-        <td><input type="checkbox"></td>
+        <td><input type="checkbox" name="check" value="<%=book.getTitle()%>"></td>
       </tr>
       <%}%>
-      </table><br><br>
+      </table><br>
+      ${msg}<br>
       <input type="submit" value="Submit">
   </form>
 </body>
