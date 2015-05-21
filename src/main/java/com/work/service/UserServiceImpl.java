@@ -39,4 +39,9 @@ public class UserServiceImpl implements UserService {
     public boolean addRequest(String title, String login){
         return userDAO.addRequest(title, login);
     }
+
+    @Override
+    public List<Book> getUsersBook(){
+        return userDAO.getUsersBook();
+    }
 }

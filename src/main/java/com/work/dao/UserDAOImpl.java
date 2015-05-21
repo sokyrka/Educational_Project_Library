@@ -140,4 +140,33 @@ public class UserDAOImpl implements UserDAO{
         }
         return result;
     }
+
+    @Override
+    public List<Book> getUsersBook(){
+        List<Book> tmpList = new ArrayList<Book>();
+        try {
+            String sqlQuery = "SELECT * FROM BOOK";
+
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url,username,pass);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+
+            while (resultSet.next()){
+                if(!resultSet.getBoolean("busy")){
+                    Book book = new Book.Builder()
+                            .title(resultSet.getString("title"))
+                            .author(resultSet.getString("author"))
+                            .year(resultSet.getInt("year"))
+                            .pages(resultSet.getInt("pages"))
+                            .build();
+                    tmpList.add(book);
+                }
+            }
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return tmpList;
+    }
 }

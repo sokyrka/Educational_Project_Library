@@ -19,4 +19,6 @@ public interface UserDAO {
     Book findBook(String title);
 
     boolean addRequest(String title, String login);
+
+    List<Book> getUsersBook();
 }

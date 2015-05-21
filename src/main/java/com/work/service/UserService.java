@@ -18,4 +18,6 @@ public interface UserService {
     Book findBook(String title);
 
     boolean addRequest(String title, String login);
+
+    List<Book> getUsersBook();
 }

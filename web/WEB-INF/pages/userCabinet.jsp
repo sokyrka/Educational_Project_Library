@@ -18,7 +18,7 @@
     <p>You can find any book by title</p>
     <button formaction="${pageContext.request.contextPath}/findBook.html">Find book</button>
     <p>You can see the list of books that you have now</p>
-    <button formaction="${pageContext.request.contextPath}/freeBooks.html">My book</button>
+    <button formaction="${pageContext.request.contextPath}/usersBook.html">My book</button>
   </form>
 </body>
 </html>

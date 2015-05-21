@@ -57,6 +57,7 @@ public class UserController {
                 userService.addUser(first_name, second_name, login, password);
                 modelAndView = new ModelAndView("userCabinet");
                 session.setAttribute("user_login", login);
+                modelAndView.addObject("msg", login);
             }else {
                 modelAndView = new ModelAndView("registerPage");
                 modelAndView.addObject("msg", "Such user already exists");
@@ -96,12 +97,17 @@ public class UserController {
 
     @RequestMapping(value = "/addedBook.html", method = RequestMethod.POST)
     public ModelAndView successfulAddedBook(@RequestParam("check") String title, HttpSession session){
-
-        String login = (String) session.getAttribute("user_login");
+        final String login = (String) session.getAttribute("user_login");
         userService.addRequest(title,login);
         ModelAndView modelAndView = new ModelAndView("successfulAddedBook");
         modelAndView.addObject("msg", title + " success added");
-
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/usersBook.html")
+    public String getAllUsersBook(Model model){
+        List<Book> usersBook = userService.getUsersBook();
+        model.addAttribute("usersBook", usersBook);
+        return "usersBook";
     }
 }
