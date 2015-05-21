@@ -2,6 +2,8 @@ package com.work.controller;
 
 import com.work.common.Book;
 import com.work.dao.UserDAOImpl;
+import com.work.service.UserService;
+import com.work.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,8 @@ import java.util.List;
  */
 @Controller
 public class UserController {
-    private UserDAOImpl userDAO = new UserDAOImpl();
+
+    private UserService userService = new UserServiceImpl(new UserDAOImpl());
 
     @RequestMapping(value = "/welcomePage.html")
     public String welcomePage(){
@@ -27,7 +30,7 @@ public class UserController {
     public ModelAndView userCabinet(@RequestParam("login") String login,
                                     @RequestParam("password") String password){
         ModelAndView modelAndView;
-        if(userDAO.validateUser(login, password)){
+        if(userService.validateUser(login, password)){
             modelAndView = new ModelAndView("userCabinet");
             modelAndView.addObject("msg", login);
         }else{
@@ -49,8 +52,8 @@ public class UserController {
                                         @RequestParam("password") String password){
         ModelAndView modelAndView;
         if(!first_name.isEmpty() && !second_name.isEmpty() && !login.isEmpty() && !password.isEmpty()){
-            if(!userDAO.validateUser(login, password)){
-                userDAO.addUser(first_name, second_name, login, password);
+            if(!userService.validateUser(login, password)){
+                userService.addUser(first_name, second_name, login, password);
                 modelAndView = new ModelAndView("userCabinet");
             }else {
                 modelAndView = new ModelAndView("registerPage");
@@ -65,7 +68,7 @@ public class UserController {
 
     @RequestMapping(value = "/freeBooks.html")
     public String getAllFreeBooks(Model model){
-        List<Book> bookList = userDAO.getAllFreeBook();
+        List<Book> bookList = userService.getAllFreeBook();
         model.addAttribute("books", bookList);
         return "allBooks";
     }
@@ -78,7 +81,7 @@ public class UserController {
     @RequestMapping(value = "/foundBook.html", method = RequestMethod.POST)
     public String foundBook(@RequestParam("title") String title, Model model){
         String result;
-        Book book = userDAO.findBook(title);
+        Book book = userService.findBook(title);
         if(!title.isEmpty() && book != null){
             model.addAttribute("book", book);
             result = "foundBook";
