@@ -22,6 +22,8 @@
       <column name="book_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="done" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <column name="home" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="library" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
       <primary-key name="PRIMARY" columns="request_id"/>
       <foreign-key name="BOOK_book_id_fk" columns="book_id" ref-table="BOOK" ref-schema="" ref-catalog="zhenya_test1" ref-columns="book_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="USER_user_id_fk" columns="user_id" ref-table="USER" ref-schema="" ref-catalog="zhenya_test1" ref-columns="user_id" update-rule="3" delete-rule="3" deferrability="2"/>

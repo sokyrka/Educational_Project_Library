@@ -11,10 +11,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Free Books</title>
+  <title>Users Books</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/" method="post">
+<form action="${pageContext.request.contextPath}/" method="post"><!--Добавить ссылку -->
   <table style="border: 1px solid; width: 500px; text-align:center">
     <thead style="background:#22ff1f">
     <tr>

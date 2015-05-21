@@ -145,15 +145,14 @@ public class UserDAOImpl implements UserDAO{
     public List<Book> getUsersBook(){
         List<Book> tmpList = new ArrayList<Book>();
         try {
-            String sqlQuery = "SELECT * FROM BOOK";
-
+            String sqlQuery = "SELECT *FROM BOOK WHERE book_id = (SELECT book_id FROM REQUEST WHERE done=TRUE)";
+            //Добавить нормальный запрос
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url,username,pass);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
 
             while (resultSet.next()){
-                if(!resultSet.getBoolean("busy")){
                     Book book = new Book.Builder()
                             .title(resultSet.getString("title"))
                             .author(resultSet.getString("author"))
@@ -161,7 +160,6 @@ public class UserDAOImpl implements UserDAO{
                             .pages(resultSet.getInt("pages"))
                             .build();
                     tmpList.add(book);
-                }
             }
             connection.close();
         } catch (SQLException | ClassNotFoundException e) {
