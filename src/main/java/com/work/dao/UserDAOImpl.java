@@ -121,5 +121,23 @@ public class UserDAOImpl implements UserDAO{
         return book;
     }
 
-
+    @Override
+    public boolean addRequest(String title, String login){
+        boolean result = false;
+        try {
+            String sqlQuery = "INSERT INTO REQUEST (book_id, user_id) VALUES (" +
+                    "(SELECT book_id FROM BOOK WHERE title = ?), " +
+                    "(SELECT user_id FROM USER WHERE login = ?))";
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(url,username,pass);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, login);
+            result = preparedStatement.execute();
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

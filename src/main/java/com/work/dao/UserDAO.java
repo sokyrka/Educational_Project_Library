@@ -18,5 +18,5 @@ public interface UserDAO {
 
     Book findBook(String title);
 
-    //boolean addRequest(String title);
+    boolean addRequest(String title, String login);
 }

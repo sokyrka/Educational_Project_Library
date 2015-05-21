@@ -8,6 +8,6 @@ import com.work.common.User;
 public class Main {
     public static void main(String[] args) {
         UserDAOImpl userDAO = new UserDAOImpl();
-        System.out.println(userDAO.findBook("Java").getTitle().toString());
+        userDAO.addRequest("Java", "root");
     }
 }

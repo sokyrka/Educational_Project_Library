@@ -16,4 +16,6 @@ public interface UserService {
     List<Book> getAllFreeBook();
 
     Book findBook(String title);
+
+    boolean addRequest(String title, String login);
 }

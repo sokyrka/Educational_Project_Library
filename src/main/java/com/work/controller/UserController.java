@@ -95,10 +95,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addedBook.html", method = RequestMethod.POST)
-    public ModelAndView successfulAddedBook(HttpSession session){
+    public ModelAndView successfulAddedBook(@RequestParam("check") String title, HttpSession session){
 
+        String login = (String) session.getAttribute("user_login");
+        userService.addRequest(title,login);
         ModelAndView modelAndView = new ModelAndView("successfulAddedBook");
-        modelAndView.addObject("msg", session.getAttribute("user_login"));
+        modelAndView.addObject("msg", title + " success added");
 
         return modelAndView;
     }
