@@ -33,6 +33,7 @@ public class UserController {
             modelAndView = new ModelAndView("userCabinet");
             modelAndView.addObject("msg", login);
             session.setAttribute("user_login", login);
+            session.setMaxInactiveInterval(20*60);
         }else{
             modelAndView = new ModelAndView("welcomePage");
             modelAndView.addObject("msg","Incorrect login or pass");
@@ -57,6 +58,7 @@ public class UserController {
                 userService.addUser(first_name, second_name, login, password);
                 modelAndView = new ModelAndView("userCabinet");
                 session.setAttribute("user_login", login);
+                session.setMaxInactiveInterval(20*60);
                 modelAndView.addObject("msg", login);
             }else {
                 modelAndView = new ModelAndView("registerPage");
@@ -98,7 +100,10 @@ public class UserController {
     @RequestMapping(value = "/addedBook.html", method = RequestMethod.POST)
     public ModelAndView successfulAddedBook(@RequestParam("check") String title, HttpSession session){
         final String login = (String) session.getAttribute("user_login");
-        userService.addRequest(title,login);
+        String[] tmpString  = title.split("[\\p{Punct} ]");
+        for(String t : tmpString ){
+            userService.addRequest(t,login);
+        }
         ModelAndView modelAndView = new ModelAndView("successfulAddedBook");
         modelAndView.addObject("msg", title + " success added");
         return modelAndView;

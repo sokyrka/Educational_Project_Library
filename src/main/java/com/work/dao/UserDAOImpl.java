@@ -11,10 +11,7 @@ import java.util.List;
  */
 public class UserDAOImpl implements UserDAO{
 
-    private final String url = "jdbc:mysql://176.37.217.24:3306/zhenya_test1";
-    private final String username = "quattro";
-    private final String pass = "Zhenya2015";
-    private Connection connection;
+    private final DBPool dbPool = new DBPool();
 
     @Override
     public void addUser(String first_name, String second_name, String login, String password) {
@@ -29,16 +26,15 @@ public class UserDAOImpl implements UserDAO{
                     "(first_name, second_name, login, password)" +
                     "VALUES" +
                     "(?, ?, ?, ?)";
-
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url,username,pass);
+            Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, user.getFirst_name());
             preparedStatement.setString(2, user.getSecond_name());
             preparedStatement.setString(3, user.getLogin());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.execute();
-            connection.close();
+            dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -49,9 +45,8 @@ public class UserDAOImpl implements UserDAO{
         boolean result = false;
         try {
             String sqlQuery = "SELECT * FROM USER";
-
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url,username,pass);
+            Connection connection = dbPool.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()){
@@ -59,7 +54,7 @@ public class UserDAOImpl implements UserDAO{
                     result = true;
                 }
             }
-            connection.close();
+            dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -70,15 +65,12 @@ public class UserDAOImpl implements UserDAO{
     public List<Book> getAllFreeBook() {
         List<Book> tmpList = new ArrayList<Book>();
         try {
-            String sqlQuery = "SELECT * FROM BOOK";
-
+            String sqlQuery = "SELECT * FROM BOOK WHERE busy = FALSE";
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url,username,pass);
+            Connection connection = dbPool.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
-
             while (resultSet.next()){
-                if(!resultSet.getBoolean("busy")){
                     Book book = new Book.Builder()
                             .title(resultSet.getString("title"))
                             .author(resultSet.getString("author"))
@@ -86,9 +78,8 @@ public class UserDAOImpl implements UserDAO{
                             .pages(resultSet.getInt("pages"))
                             .build();
                     tmpList.add(book);
-                }
             }
-            connection.close();
+            dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -99,9 +90,9 @@ public class UserDAOImpl implements UserDAO{
     public Book findBook(String title) {
         Book book = null;
         try {
-            String sqlQuery = "SELECT * FROM BOOK WHERE title = ?";
+            String sqlQuery = "SELECT * FROM BOOK WHERE title = ? AND busy = FALSE";
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url,username,pass);
+            Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, title);
             preparedStatement.execute();
@@ -114,7 +105,7 @@ public class UserDAOImpl implements UserDAO{
                         .pages(resultSet.getInt("pages"))
                         .build();
             }
-            connection.close();
+            dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -129,12 +120,12 @@ public class UserDAOImpl implements UserDAO{
                     "(SELECT book_id FROM BOOK WHERE title = ?), " +
                     "(SELECT user_id FROM USER WHERE login = ?))";
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url,username,pass);
+            Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, login);
             result = preparedStatement.execute();
-            connection.close();
+            dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -150,7 +141,7 @@ public class UserDAOImpl implements UserDAO{
                     "SELECT user_id FROM USER WHERE login = ?) " +
                     "AND done = TRUE AND (home = TRUE OR library = TRUE)) ";
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url,username,pass);
+            Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, login);
             preparedStatement.execute();
@@ -164,7 +155,7 @@ public class UserDAOImpl implements UserDAO{
                             .build();
                     tmpList.add(book);
             }
-            connection.close();
+            dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
