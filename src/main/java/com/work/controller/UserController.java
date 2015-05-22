@@ -21,7 +21,7 @@ public class UserController {
 
     @RequestMapping(value = "/welcomePage.html")
     public String welcomePage(){
-        return "welcomePage";
+        return "user/welcomePage";
     }
 
     @RequestMapping(value = "/userCabinet.html", method = RequestMethod.POST)
@@ -30,12 +30,12 @@ public class UserController {
                                     HttpSession session){
         ModelAndView modelAndView;
         if(userService.validateUser(login, password)){
-            modelAndView = new ModelAndView("userCabinet");
+            modelAndView = new ModelAndView("user/userCabinet");
             modelAndView.addObject("msg", login);
             session.setAttribute("user_login", login);
             session.setMaxInactiveInterval(20*60);
         }else{
-            modelAndView = new ModelAndView("welcomePage");
+            modelAndView = new ModelAndView("user/welcomePage");
             modelAndView.addObject("msg","Incorrect login or pass");
         }
         return modelAndView;
@@ -43,7 +43,7 @@ public class UserController {
 
     @RequestMapping(value = "/registerPage.html")
     public String registerPage(){
-        return "registerPage";
+        return "user/registerPage";
     }
 
     @RequestMapping(value = "/successRegister.html", method = RequestMethod.POST)
@@ -56,16 +56,16 @@ public class UserController {
         if(!first_name.isEmpty() && !second_name.isEmpty() && !login.isEmpty() && !password.isEmpty()){
             if(!userService.validateUser(login, password)){
                 userService.addUser(first_name, second_name, login, password);
-                modelAndView = new ModelAndView("userCabinet");
+                modelAndView = new ModelAndView("user/userCabinet");
                 session.setAttribute("user_login", login);
                 session.setMaxInactiveInterval(20*60);
                 modelAndView.addObject("msg", login);
             }else {
-                modelAndView = new ModelAndView("registerPage");
+                modelAndView = new ModelAndView("user/registerPage");
                 modelAndView.addObject("msg", "Such user already exists");
             }
         }else {
-            modelAndView = new ModelAndView("registerPage");
+            modelAndView = new ModelAndView("user/registerPage");
             modelAndView.addObject("msg", "Incorrect information");
         }
         return modelAndView;
@@ -75,12 +75,12 @@ public class UserController {
     public String getAllFreeBooks(Model model){
         List<Book> bookList = userService.getAllFreeBook();
         model.addAttribute("books", bookList);
-        return "allBooks";
+        return "user/allBooks";
     }
 
     @RequestMapping(value = "/findBook.html")
     public String findBook(){
-        return "findBook";
+        return "user/findBook";
     }
 
     @RequestMapping(value = "/foundBook.html", method = RequestMethod.POST)
@@ -104,7 +104,7 @@ public class UserController {
         for(String t : tmpString ){
             userService.addRequest(t,login);
         }
-        ModelAndView modelAndView = new ModelAndView("successfulAddedBook");
+        ModelAndView modelAndView = new ModelAndView("user/successfulAddedBook");
         modelAndView.addObject("msg", title + " success added");
         return modelAndView;
     }
@@ -114,7 +114,7 @@ public class UserController {
         final String login = (String) session.getAttribute("user_login");
         List<Book> usersBook = userService.getUsersBook(login);
         model.addAttribute("usersBook", usersBook);
-        return "usersBook";
+        return "user/usersBook";
     }
 
     @RequestMapping(value = "/deletedBook.html", method = RequestMethod.POST)
@@ -122,9 +122,9 @@ public class UserController {
         final String login = (String) session.getAttribute("user_login");
         String[] tmpString  = title.split("[\\p{Punct} ]");
         for(String t : tmpString ){
-            userService.deleteUsersBook(t,login);
+            userService.deleteUsersBook(t, login);
         }
-        ModelAndView modelAndView = new ModelAndView("successfulDeletedBook");
+        ModelAndView modelAndView = new ModelAndView("user/successfulDeletedBook");
         modelAndView.addObject("msg", title + " success deleted");
         return modelAndView;
     }
