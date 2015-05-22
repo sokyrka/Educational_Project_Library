@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.work.common.Book" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
@@ -12,6 +13,7 @@
 <html>
 <head>
   <title>Users Books</title>
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/deletedBook.html" method="post">

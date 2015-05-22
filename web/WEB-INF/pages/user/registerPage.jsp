@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Eugine Sokirka
@@ -9,44 +10,27 @@
 <html>
 <head>
   <title>Register</title>
-  <style>
-    #form{
-      float:left;
-    }
-    #names{
-      float:left;
-      padding:0px;
-      margin-top:-10px;
-      margin-right:10px;
-    }
-    #wrapper{
-      width:280px;
-      height:175px;
-      border:1px dotted black;
-      border-radius:15px;
-      padding:15px;
-      margin:auto;
-      position:relative;
-      top:30%;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
 <body>
-<div id="wrapper">
-  <div id="names">
-    <p>First Name</p>
-    <p>Second Name</p>
-    <p>Login</p>
-    <p>Password</p>
-  </div>
-  <div id="form">
+<div id="wrapper" style="height: 300px; width: 400px">
+  <div id=form_wrapper>
     <form action="${pageContext.request.contextPath}/successRegister.html" method="post">
-      <input type="text" name="first_name"><br><br>
-      <input type="text" name="second_name"><br><br>
-      <input type="text" name="login"><br><br>
-      <input type="text" name="password"><br><br>
-      <input type="submit" value="Register"><br><br>
-      ${msg}
+      <div id="l">
+      <p>First Name</p>
+      <p>Second Name</p>
+      <p>Login</p>
+      <p>Password</p>
+      </div>
+      <div id="r">
+      <input type="text" name="first_name" class="text_field"><br><br>
+      <input type="text" name="second_name" class="text_field"><br><br>
+      <input type="text" name="login" class="text_field"><br><br>
+      <input type="text" name="password" class="text_field"><br><br>
+      </div>
+      <input type="submit" value="Register" class="myButton"><br><br>
+      <span class="error">${msg}</span>
     </form>
   </div>
 </div>

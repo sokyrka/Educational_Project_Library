@@ -12,7 +12,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Free Books</title>
+  <title>Free Books</title>
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
 <body>
   <form action="${pageContext.request.contextPath}/addedBook.html" method="post">

@@ -89,10 +89,10 @@ public class UserController {
         Book book = userService.findBook(title);
         if(!title.isEmpty() && book != null){
             model.addAttribute("book", book);
-            result = "foundBook";
+            result = "user/foundBook";
         }else {
             model.addAttribute("msg", "Not find");
-            result = "findBook";
+            result = "user/findBook";
         }
         return result;
     }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Eugine Sokirka
@@ -8,41 +9,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Find book</title>
-  <style>
-    #form{
-      float:left;
-    }
-    #names{
-      float:left;
-      padding:0px;
-      margin-top:-10px;
-      margin-right:10px;
-    }
-    #wrapper{
-      width:250px;
-      height:60px;
-      border:1px dotted black;
-      border-radius:15px;
-      padding:15px;
-      margin:auto;
-      position:relative;
-      top:30%;
-    }
-  </style>
+  <title>Find book</title>
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
 <body>
-  <div id="wrapper">
-    <div id="names">
-      <p>Title</p>
-    </div>
-    <div id="form">
+  <div id="wrapper" style="height: 130px;">
+    <div id=form_wrapper>
       <form action="${pageContext.request.contextPath}/foundBook.html" method="post">
-        <input type="text" name="title"><br><br>
-        <input type="submit" value="Find"><br><br>
-        ${msg}
+      <div id="l">
+        <p style="font-size: 20px">Title</p>
+      </div>
+      <div id="r">
+        <input type="text" name="title" class="text_field"><br><br>
+        <input type="submit" value="Find" class="myButton">
+      </div><br><br>
       </form>
-    </div>
+    </div><br><br>
+    <span class="error">${msg}</span>
   </div>
 </body>
 </html>

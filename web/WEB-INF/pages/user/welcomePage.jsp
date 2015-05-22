@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--
   Created by IntelliJ IDEA.
   User: Eugine Sokirka
@@ -7,43 +8,26 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head><title>Welcome</title>
-  <style>
-    #form{
-      float:left;
-    }
-    #names{
-      float:left;
-      padding:0px;
-      margin-top:-10px;
-      margin-right:10px;
-    }
-    #wrapper{
-      width:250px;
-      height:100px;
-      border:1px dotted black;
-      border-radius:15px;
-      padding:15px;
-      margin:auto;
-      position:relative;
-      top:30%;
-
-    }
-  </style>
+<head>
+  <title>Welcome</title>
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
 <body>
 <div id="wrapper">
-  <div id="names">
-    <p>Login</p>
-    <p>Password</p>
-  </div>
-  <div id="form">
+  <div id=form_wrapper>
     <form action="${pageContext.request.contextPath}/userCabinet.html" method="post">
-      <input type="text" name="login"><br><br>
-      <input type="text" name="password"><br><br>
-      <input type="submit" value="Sign in">
-      <button formaction="${pageContext.request.contextPath}/registerPage.html">Sign up</button><br><br>
-      ${msg}
+      <div id="l">
+        <p>Login</p>
+        <p>Password</p>
+      </div>
+      <div id="r">
+        <span><input type="text" name="login" class="text_field"></span><br><br>
+        <span><input type="text" name="password" class="text_field"></span><br>
+      </div>
+      <input type="submit" value="Sign in" class="myButton">
+      <button class="myButton" formaction="${pageContext.request.contextPath}/registerPage.html">Sign up</button><br><br>
+      <span class="error">${msg}</span>
     </form>
   </div>
 </div>
