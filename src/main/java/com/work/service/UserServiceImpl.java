@@ -44,4 +44,9 @@ public class UserServiceImpl implements UserService {
     public List<Book> getUsersBook(String login){
         return userDAO.getUsersBook(login);
     }
+
+    @Override
+    public boolean deleteUsersBook(String title, String login){
+        return userDAO.deleteUsersBook(title, login);
+    }
 }

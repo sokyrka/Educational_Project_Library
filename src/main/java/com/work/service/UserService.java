@@ -20,4 +20,6 @@ public interface UserService {
     boolean addRequest(String title, String login);
 
     List<Book> getUsersBook(String login);
+
+    boolean deleteUsersBook(String title, String login);
 }

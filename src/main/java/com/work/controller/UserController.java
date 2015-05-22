@@ -116,4 +116,16 @@ public class UserController {
         model.addAttribute("usersBook", usersBook);
         return "usersBook";
     }
+
+    @RequestMapping(value = "/deletedBook.html", method = RequestMethod.POST)
+    public ModelAndView successfulDeletedBook(@RequestParam("check") String title, HttpSession session){
+        final String login = (String) session.getAttribute("user_login");
+        String[] tmpString  = title.split("[\\p{Punct} ]");
+        for(String t : tmpString ){
+            userService.deleteUsersBook(t,login);
+        }
+        ModelAndView modelAndView = new ModelAndView("successfulDeletedBook");
+        modelAndView.addObject("msg", title + " success deleted");
+        return modelAndView;
+    }
 }

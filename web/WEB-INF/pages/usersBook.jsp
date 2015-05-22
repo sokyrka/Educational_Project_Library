@@ -14,7 +14,7 @@
   <title>Users Books</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/" method="post"><!--Добавить ссылку -->
+<form action="${pageContext.request.contextPath}/deletedBook.html" method="post">
   <table style="border: 1px solid; width: 500px; text-align:center">
     <thead style="background:#22ff1f">
     <tr>

@@ -161,4 +161,24 @@ public class UserDAOImpl implements UserDAO{
         }
         return tmpList;
     }
+
+    @Override
+    public boolean deleteUsersBook(String title, String login) {
+        boolean result = false;
+        try {
+            String sqlQuery = "UPDATE REQUEST SET home = FALSE , library = FALSE " +
+                    "WHERE book_id = (SELECT book_id FROM BOOK WHERE title = ?) " +
+                    "AND user_id = (SELECT user_id FROM USER WHERE login = ?)";
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = dbPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, login);
+            result = preparedStatement.execute();
+            dbPool.closeConnection(connection);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
