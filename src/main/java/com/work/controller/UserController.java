@@ -105,8 +105,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/usersBook.html")
-    public String getAllUsersBook(Model model){
-        List<Book> usersBook = userService.getUsersBook();
+    public String getAllUsersBook(Model model, HttpSession session){
+        final String login = (String) session.getAttribute("user_login");
+        List<Book> usersBook = userService.getUsersBook(login);
         model.addAttribute("usersBook", usersBook);
         return "usersBook";
     }

@@ -19,5 +19,5 @@ public interface UserService {
 
     boolean addRequest(String title, String login);
 
-    List<Book> getUsersBook();
+    List<Book> getUsersBook(String login);
 }

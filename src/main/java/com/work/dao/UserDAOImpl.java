@@ -142,16 +142,19 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public List<Book> getUsersBook(){
+    public List<Book> getUsersBook(String login){
         List<Book> tmpList = new ArrayList<Book>();
         try {
-            String sqlQuery = "SELECT *FROM BOOK WHERE book_id = (SELECT book_id FROM REQUEST WHERE done=TRUE)";
-            //Добавить нормальный запрос
+            String sqlQuery = "SELECT * FROM BOOK WHERE book_id IN(" +
+                    "SELECT book_id FROM REQUEST WHERE user_id = (" +
+                    "SELECT user_id FROM USER WHERE login = ?) " +
+                    "AND done = TRUE AND (home = TRUE OR library = TRUE)) ";
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url,username,pass);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, login);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                     Book book = new Book.Builder()
                             .title(resultSet.getString("title"))

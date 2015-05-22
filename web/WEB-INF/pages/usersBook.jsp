@@ -28,7 +28,7 @@
     <%List<Book> array = (ArrayList<Book>) request.getAttribute("usersBook");%>
     <%if(array.isEmpty()){%>
     <tr>
-      <h1>There are no free books</h1>
+      <h1>There are no books</h1>
     </tr>
     <%}%>
     <%for(Book book : array){%>

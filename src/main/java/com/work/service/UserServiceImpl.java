@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Book> getUsersBook(){
-        return userDAO.getUsersBook();
+    public List<Book> getUsersBook(String login){
+        return userDAO.getUsersBook(login);
     }
 }
