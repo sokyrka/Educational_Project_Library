@@ -17,6 +17,9 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
 <body>
+<form style="float: left">
+  <button class="myButton" formaction="${pageContext.request.contextPath}/admin.html">Back</button>
+</form>
 <div id="wrapper" style="height: auto; width: 400px;">
   <form action="${pageContext.request.contextPath}/updatedRequest.html" method="post">
     <table style="width: 400px; text-align:center">

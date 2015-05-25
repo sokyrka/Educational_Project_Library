@@ -17,6 +17,13 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
 <body>
+<%String login = (String) request.getSession().getAttribute("user_login");%>
+<%String password = (String) request.getSession().getAttribute("user_pass");%>
+<form action="${pageContext.request.contextPath}/userCabinet.html" method="post" style="float: left">
+  <input type="hidden" name="login" value="<%=login%>">
+  <input type="hidden" name="password" value="<%=password%>">
+  <input type="submit" value="Back" class="myButton">
+</form>
 <div id="wrapper" style="height: auto; width: 500px">
   <form action="${pageContext.request.contextPath}/addedBook.html" method="post">
     <table style="width: 500px; text-align:center">
