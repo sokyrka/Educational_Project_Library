@@ -12,6 +12,7 @@
   <title>Add book</title>
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <body>
 <form style="float: left">

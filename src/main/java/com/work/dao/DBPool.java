@@ -3,6 +3,7 @@ package com.work.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -15,11 +16,16 @@ public class DBPool {
     private static final String username = "quattro";
     private static final String pass = "Zhenya2015";
     private BlockingQueue<Connection> pool = new ArrayBlockingQueue<Connection>(100);
+    private Properties properties = new Properties();
 
     public void createConnection(){
         if(pool.isEmpty()){
             try {
-                pool.add(DriverManager.getConnection(url, username, pass));
+                properties.setProperty("user", username);
+                properties.setProperty("password", pass);
+                properties.setProperty("useUnicode", "true");
+                properties.setProperty("characterEncoding", "utf-8");
+                pool.add(DriverManager.getConnection(url, properties));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
