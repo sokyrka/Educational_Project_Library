@@ -27,17 +27,8 @@
       <primary-key name="PRIMARY" columns="request_id"/>
       <foreign-key name="BOOK_book_id_fk" columns="book_id" ref-table="BOOK" ref-schema="" ref-catalog="zhenya_test1" ref-columns="book_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="USER_user_id_fk" columns="user_id" ref-table="USER" ref-schema="" ref-catalog="zhenya_test1" ref-columns="user_id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <exported-key name="REQUEST_request_id_fk" table="SUBSCRIPTION" schema="" catalog="zhenya_test1" columns="request_id"/>
       <index name="BOOK_book_id_fk" unique="false" columns="book_id"/>
       <index name="USER_user_id_fk" unique="false" columns="user_id"/>
-    </table>
-    <table name="SUBSCRIPTION" schema="" catalog="zhenya_test1" type="TABLE">
-      <column name="subscription_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="request_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="reading_room" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
-      <primary-key name="PRIMARY" columns="subscription_id"/>
-      <foreign-key name="REQUEST_request_id_fk" columns="request_id" ref-table="REQUEST" ref-schema="" ref-catalog="zhenya_test1" ref-columns="request_id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <index name="REQUEST_request_id_fk" unique="false" columns="request_id"/>
     </table>
     <table name="USER" schema="" catalog="zhenya_test1" type="TABLE">
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

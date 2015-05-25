@@ -33,6 +33,7 @@ public class UserController {
             modelAndView = new ModelAndView("user/userCabinet");
             modelAndView.addObject("msg", login);
             session.setAttribute("user_login", login);
+            session.setAttribute("user_pass", password);
             session.setMaxInactiveInterval(20*60);
         }else{
             modelAndView = new ModelAndView("user/welcomePage");

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Cabinet</title>
+  <title>User cabinet</title>
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
@@ -17,11 +17,11 @@
 <div id="wrapper">
 <h1>Hello ${msg}</h1>
   <form>
-    <p>You can see all the available books</p>
+    <%--<p>You can see all the available books</p>--%>
     <button class="myButton" formaction="${pageContext.request.contextPath}/freeBooks.html">Free books</button>
-    <p>You can find any book by title</p>
+    <%--<p>You can find any book by title</p>--%>
     <button class="myButton" formaction="${pageContext.request.contextPath}/findBook.html">Find book</button>
-    <p>You can see the list of books that you have now</p>
+    <%--<p>You can see the list of books that you have now</p>--%>
     <button class="myButton" formaction="${pageContext.request.contextPath}/usersBook.html">My book</button>
   </form>
 </div>

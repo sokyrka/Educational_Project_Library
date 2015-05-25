@@ -12,14 +12,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Free Books</title>
+  <title>Free books</title>
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
 <body>
+<div id="wrapper" style="height: auto; width: 500px">
   <form action="${pageContext.request.contextPath}/addedBook.html" method="post">
     <table style="border: 1px solid; width: 500px; text-align:center">
-      <thead style="background:#22ff1f">
+      <thead style="background:#f7ff2c">
       <tr>
         <th>Title</th>
         <th>Author</th>
@@ -45,7 +46,8 @@
       <%}%>
       </table><br>
       ${msg}<br>
-      <input type="submit" value="Submit">
+      <input class="myButton" type="submit" value="Submit">
   </form>
+</div>
 </body>
 </html>
