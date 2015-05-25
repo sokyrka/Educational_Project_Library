@@ -63,6 +63,17 @@ public class Request {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Request{" +
+                "book_id=" + book_id +
+                ", user_id=" + user_id +
+                ", done=" + done +
+                ", home=" + home +
+                ", library=" + library +
+                '}';
+    }
+
     public static class Builder{
         private int book_id;
         private int user_id;

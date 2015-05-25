@@ -15,24 +15,19 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public void addUser(String first_name, String second_name, String login, String password) {
-        User user = new User.Builder()
-                .first_name(first_name)
-                .second_name(second_name)
-                .login(login)
-                .password(password)
-                .build();
+
+        String sqlQuery = "INSERT INTO USER " +
+                "(first_name, second_name, login, password)" +
+                "VALUES" +
+                "(?, ?, ?, ?)";
         try {
-            String sqlQuery = "INSERT INTO USER " +
-                    "(first_name, second_name, login, password)" +
-                    "VALUES" +
-                    "(?, ?, ?, ?)";
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setString(1, user.getFirst_name());
-            preparedStatement.setString(2, user.getSecond_name());
-            preparedStatement.setString(3, user.getLogin());
-            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(1, first_name);
+            preparedStatement.setString(2, second_name);
+            preparedStatement.setString(3, login);
+            preparedStatement.setString(4, password);
             preparedStatement.execute();
             dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
@@ -43,8 +38,9 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public boolean validateUser(String login, String password){
         boolean result = false;
+
+        String sqlQuery = "SELECT * FROM USER";
         try {
-            String sqlQuery = "SELECT * FROM USER";
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             Statement statement = connection.createStatement();
@@ -64,8 +60,9 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public List<Book> getAllFreeBook() {
         List<Book> tmpList = new ArrayList<Book>();
+
+        String sqlQuery = "SELECT * FROM BOOK WHERE busy = FALSE";
         try {
-            String sqlQuery = "SELECT * FROM BOOK WHERE busy = FALSE";
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             Statement statement = connection.createStatement();
@@ -89,8 +86,9 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public Book findBook(String title) {
         Book book = null;
+
+        String sqlQuery = "SELECT * FROM BOOK WHERE title = ? AND busy = FALSE";
         try {
-            String sqlQuery = "SELECT * FROM BOOK WHERE title = ? AND busy = FALSE";
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -115,10 +113,11 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public boolean addRequest(String title, String login){
         boolean result = false;
+
+        String sqlQuery = "INSERT INTO REQUEST (book_id, user_id) VALUES (" +
+                "(SELECT book_id FROM BOOK WHERE title = ?), " +
+                "(SELECT user_id FROM USER WHERE login = ?))";
         try {
-            String sqlQuery = "INSERT INTO REQUEST (book_id, user_id) VALUES (" +
-                    "(SELECT book_id FROM BOOK WHERE title = ?), " +
-                    "(SELECT user_id FROM USER WHERE login = ?))";
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -135,11 +134,12 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public List<Book> getUsersBook(String login){
         List<Book> tmpList = new ArrayList<Book>();
+
+        String sqlQuery = "SELECT * FROM BOOK WHERE book_id IN(" +
+                "SELECT book_id FROM REQUEST WHERE user_id = (" +
+                "SELECT user_id FROM USER WHERE login = ?) " +
+                "AND done = TRUE AND (home = TRUE OR library = TRUE)) ";
         try {
-            String sqlQuery = "SELECT * FROM BOOK WHERE book_id IN(" +
-                    "SELECT book_id FROM REQUEST WHERE user_id = (" +
-                    "SELECT user_id FROM USER WHERE login = ?) " +
-                    "AND done = TRUE AND (home = TRUE OR library = TRUE)) ";
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -165,10 +165,11 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public boolean deleteUsersBook(String title, String login) {
         boolean result = false;
+
+        String sqlQuery = "UPDATE REQUEST SET home = FALSE , library = FALSE " +
+                "WHERE book_id = (SELECT book_id FROM BOOK WHERE title = ?) " +
+                "AND user_id = (SELECT user_id FROM USER WHERE login = ?)";
         try {
-            String sqlQuery = "UPDATE REQUEST SET home = FALSE , library = FALSE " +
-                    "WHERE book_id = (SELECT book_id FROM BOOK WHERE title = ?) " +
-                    "AND user_id = (SELECT user_id FROM USER WHERE login = ?)";
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);

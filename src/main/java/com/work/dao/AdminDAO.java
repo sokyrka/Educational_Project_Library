@@ -1,16 +1,20 @@
 package com.work.dao;
 
-import com.work.common.Book;
-import com.work.common.User;
+import com.work.common.Request;
+
+import java.util.List;
 
 /**
  * Created by Eugine Sokirka on 18.05.2015.
  */
 public interface AdminDAO {
 
-    boolean addBook();
+    boolean addBook(String title, String author, int year, int pages);
 
-    boolean deleteBook();
+    boolean deleteBook(String title, String author);
 
+    List<Request> allRequests();
+
+    boolean updateRequest(Request request);
 
 }
