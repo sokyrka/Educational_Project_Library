@@ -23,4 +23,6 @@ public interface UserDAO {
     List<Book> getUsersBook(String login);
 
     boolean deleteUsersBook(String title, String login);
+
+    void changeBookStatus(String title);
 }

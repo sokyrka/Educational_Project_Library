@@ -85,25 +85,42 @@ public class AdminDAOImpl implements AdminDAO {
     }
 
     @Override
-    public boolean updateRequest(int user_id, int book_id, boolean home, boolean library) {
+    public boolean updateRequest(int request_id, boolean home, boolean library) {
         boolean result = false;
 
         String sqlQuery = "UPDATE REQUEST " +
                 "SET done = TRUE, home = ?, library = ? " +
-                "WHERE user_id = ? AND book_id = ?";
+                "WHERE request_id = ?";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setBoolean(1, home);
             preparedStatement.setBoolean(2, library);
-            preparedStatement.setInt(3, user_id);
-            preparedStatement.setInt(4, book_id);
+            preparedStatement.setInt(3, request_id);
             result = preparedStatement.execute();
             dbPool.closeConnection(connection);
+            changeBookStatus(request_id);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public void changeBookStatus(int request_id){
+
+        String sqlQuery = "UPDATE BOOK SET busy = TRUE " +
+                "WHERE book_id = (SELECT book_id FROM REQUEST WHERE request_id = ?)";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = dbPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, request_id);
+            preparedStatement.execute();
+            dbPool.closeConnection(connection);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

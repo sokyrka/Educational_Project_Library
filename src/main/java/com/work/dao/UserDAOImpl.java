@@ -177,9 +177,27 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.setString(2, login);
             result = preparedStatement.execute();
             dbPool.closeConnection(connection);
+            changeBookStatus(title);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public void changeBookStatus(String title){
+
+        String sqlQuery = "UPDATE BOOK SET busy = FALSE " +
+                "WHERE title = ?";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = dbPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, title);
+            preparedStatement.execute();
+            dbPool.closeConnection(connection);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

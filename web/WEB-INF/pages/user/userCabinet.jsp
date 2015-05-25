@@ -14,16 +14,11 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
 <body>
-<div id="wrapper">
 <h1>Hello ${msg}</h1>
-  <form>
-    <%--<p>You can see all the available books</p>--%>
+  <form style="float: left">
     <button class="myButton" formaction="${pageContext.request.contextPath}/freeBooks.html">Free books</button>
-    <%--<p>You can find any book by title</p>--%>
     <button class="myButton" formaction="${pageContext.request.contextPath}/findBook.html">Find book</button>
-    <%--<p>You can see the list of books that you have now</p>--%>
     <button class="myButton" formaction="${pageContext.request.contextPath}/usersBook.html">My book</button>
   </form>
-</div>
 </body>
 </html>

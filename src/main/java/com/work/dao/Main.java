@@ -7,6 +7,5 @@ package com.work.dao;
 public class Main {
     public static void main(String[] args) {
         AdminDAO adminDAO = new AdminDAOImpl();
-        adminDAO.updateRequest(1, 1, true, false);
     }
 }

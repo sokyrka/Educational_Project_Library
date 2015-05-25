@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -34,11 +33,14 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/updatedRequest.html", method = RequestMethod.POST)
-    public ModelAndView updatedRequest(@RequestParam("to_home") String home,
-                                       @RequestParam("request_id") String request_id){
-        ModelAndView modelAndView = new ModelAndView("admin/successfulUpdatedRequest");
-        modelAndView.addObject("msg", home + " " + request_id);
-        return modelAndView;
+    public String updatedRequest(@RequestParam("radio_param") String radio_param,
+                                       @RequestParam("request_id") int request_id){
+        if(radio_param.equals("home")){
+            adminService.updateRequest(request_id, true, false);
+        }else {
+            adminService.updateRequest(request_id, false, true);
+        }
+        return "admin/successfulUpdatedRequest";
     }
 
     @RequestMapping(value = "/addBook.html")

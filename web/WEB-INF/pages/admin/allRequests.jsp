@@ -25,7 +25,8 @@
         <th>Book</th>
         <th>User</th>
         <th>To home</th>
-        <th>library</th>
+        <th>To library</th>
+        <th>Done</th>
       </tr>
       </thead>
       <%List<Request> array = (ArrayList<Request>) request.getAttribute("requestList");%>
@@ -38,7 +39,8 @@
       <tr>
         <td><%=request1.getBook_id()%></td>
         <td><%=request1.getUser_id()%></td>
-        <td><input type="checkbox" name="to_home" value="true"></td>
+        <td><input type="radio" name="radio_param" value="home"></td>
+        <td><input type="radio" name="radio_param" value="library>"></td>
         <td><input type="checkbox" name="request_id" value="<%=request1.getRequest_id()%>"></td>
       </tr>
       <%}%>
