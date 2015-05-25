@@ -16,5 +16,4 @@ public interface AdminService {
     List<Request> allRequests();
 
     boolean updateRequest(int user_id, int book_id, boolean home, boolean library);
-
 }

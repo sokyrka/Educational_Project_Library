@@ -35,5 +35,4 @@ public class AdminServiceImpl implements AdminService{
     public boolean updateRequest(int user_id, int book_id, boolean home, boolean library) {
         return adminDAO.updateRequest(user_id, book_id, home, library);
     }
-
 }
