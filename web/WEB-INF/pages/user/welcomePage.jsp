@@ -23,7 +23,7 @@
       </div>
       <div id="r">
         <span><input type="text" name="login" class="text_field"></span><br><br>
-        <span><input type="text" name="password" class="text_field"></span><br>
+        <span><input type="password" name="password" class="text_field"></span><br>
       </div>
       <input type="submit" value="Sign in" class="myButton">
       <button class="myButton" formaction="${pageContext.request.contextPath}/registerPage.html">Sign up</button><br><br>
