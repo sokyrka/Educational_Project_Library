@@ -8,17 +8,9 @@ import com.work.common.User;
  */
 public interface AdminDAO {
 
-    void addBook();
+    boolean addBook();
 
-    Book getBook();
+    boolean deleteBook();
 
-    void updateBook();
 
-    void deleteBook();
-
-    User getUser();
-
-    void updateUser();
-
-    boolean deleteUser(String first_name, String second_name);
 }
