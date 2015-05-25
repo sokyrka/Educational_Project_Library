@@ -24,10 +24,10 @@
       <p>Password</p>
       </div>
       <div id="r">
-      <input type="text" name="first_name" class="text_field"><br><br>
-      <input type="text" name="second_name" class="text_field"><br><br>
-      <input type="text" name="login" class="text_field"><br><br>
-      <input type="text" name="password" class="text_field"><br><br>
+      <input required type="text" name="first_name" class="text_field"><br><br>
+      <input required type="text" name="second_name" class="text_field"><br><br>
+      <input required type="text" name="login" class="text_field"><br><br>
+      <input required type="text" name="password" class="text_field"><br><br>
       </div>
       <input type="submit" value="Register" class="myButton"><br><br>
       <span class="error">${msg}</span>

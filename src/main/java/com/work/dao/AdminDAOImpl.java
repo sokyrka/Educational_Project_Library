@@ -68,6 +68,7 @@ public class AdminDAOImpl implements AdminDAO {
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()){
                 Request request = new Request.Builder()
+                        .request_id(resultSet.getInt("request_id"))
                         .book_id(resultSet.getInt("book_id"))
                         .user_id(resultSet.getInt("user_id"))
                         .done(resultSet.getBoolean("done"))
@@ -84,7 +85,25 @@ public class AdminDAOImpl implements AdminDAO {
     }
 
     @Override
-    public boolean updateRequest(Request request) {
-        return false;
+    public boolean updateRequest(int user_id, int book_id, boolean home, boolean library) {
+        boolean result = false;
+
+        String sqlQuery = "UPDATE REQUEST " +
+                "SET done = TRUE, home = ?, library = ? " +
+                "WHERE user_id = ? AND book_id = ?";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = dbPool.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setBoolean(1, home);
+            preparedStatement.setBoolean(2, library);
+            preparedStatement.setInt(3, user_id);
+            preparedStatement.setInt(4, book_id);
+            result = preparedStatement.execute();
+            dbPool.closeConnection(connection);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

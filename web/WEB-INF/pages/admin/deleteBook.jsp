@@ -2,31 +2,33 @@
 <%--
   Created by IntelliJ IDEA.
   User: Eugine Sokirka
-  Date: 20.05.2015
-  Time: 17:35
+  Date: 25.05.2015
+  Time: 15:23
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Find book</title>
+  <title>Delete book</title>
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/form_style.css"/>">
 </head>
 <body>
-<div id="wrapper" style="height: 130px;">
+<div id="wrapper">
   <div id=form_wrapper>
-    <form action="${pageContext.request.contextPath}/foundBook.html" method="post">
+    <form action="${pageContext.request.contextPath}/successfulDeletedBook.html" method="post">
       <div id="l">
-        <p style="font-size: 20px">Title</p>
+        <p>Title</p>
+        <p>Author</p>
       </div>
       <div id="r">
-        <input required type="text" name="title" class="text_field"><br><br>
-        <input type="submit" value="Find" class="myButton">
-      </div><br><br>
+        <span><input type="text" name="title" class="text_field"></span><br><br>
+        <span><input type="text" name="author" class="text_field"></span><br>
+      </div>
+      <input type="submit" value="Delete" class="myButton">
+      <span class="error">${msg}</span>
     </form>
-  </div><br><br>
-  <span class="error">${msg}</span>
+  </div>
 </div>
 </body>
 </html>

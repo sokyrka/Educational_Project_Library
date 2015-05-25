@@ -19,7 +19,7 @@
 <body>
 <div id="wrapper" style="height: auto; width: 500px">
   <form action="${pageContext.request.contextPath}/addedBook.html" method="post">
-    <table style="border: 1px solid; width: 500px; text-align:center">
+    <table style="width: 500px; text-align:center">
       <thead style="background:#f7ff2c">
       <tr>
         <th>Title</th>
@@ -45,7 +45,6 @@
       </tr>
       <%}%>
       </table><br>
-      ${msg}<br>
       <input class="myButton" type="submit" value="Submit">
   </form>
 </div>

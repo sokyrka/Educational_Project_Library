@@ -4,6 +4,7 @@ package com.work.common;
  * Created by Eugine Sokirka on 25.05.2015.
  */
 public class Request {
+    private final int request_id;
     private final int book_id;
     private final int user_id;
     private final boolean done;
@@ -11,11 +12,16 @@ public class Request {
     private final boolean library;
 
     private Request(Builder builder){
+        this.request_id = builder.request_id;
         this.book_id = builder.book_id;
         this.user_id = builder.user_id;
         this.done = builder.done;
         this.home = builder.home;
         this.library = builder.library;
+    }
+
+    public int getRequest_id() {
+        return request_id;
     }
 
     public int getBook_id() {
@@ -45,6 +51,7 @@ public class Request {
 
         Request request = (Request) o;
 
+        if (request_id != request.request_id) return false;
         if (book_id != request.book_id) return false;
         if (user_id != request.user_id) return false;
         if (done != request.done) return false;
@@ -55,7 +62,8 @@ public class Request {
 
     @Override
     public int hashCode() {
-        int result = book_id;
+        int result = request_id;
+        result = 31 * result + book_id;
         result = 31 * result + user_id;
         result = 31 * result + (done ? 1 : 0);
         result = 31 * result + (home ? 1 : 0);
@@ -63,18 +71,8 @@ public class Request {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Request{" +
-                "book_id=" + book_id +
-                ", user_id=" + user_id +
-                ", done=" + done +
-                ", home=" + home +
-                ", library=" + library +
-                '}';
-    }
-
     public static class Builder{
+        private int request_id;
         private int book_id;
         private int user_id;
         private boolean done;
@@ -84,11 +82,17 @@ public class Request {
         public Builder(){}
 
         public Builder(Request request){
+            this.request_id = request.request_id;
             this.book_id = request.book_id;
             this.user_id = request.user_id;
             this.done = request.done;
             this.home = request.home;
             this.library = request.library;
+        }
+
+        public Builder request_id(int request_id){
+            this.request_id = request_id;
+            return this;
         }
 
         public Builder book_id(int book_id){

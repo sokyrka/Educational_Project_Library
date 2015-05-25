@@ -15,13 +15,13 @@
 </head>
 <body>
 <div id="wrapper" style="height: auto; width: 500px">
-  <h1>${msg}</h1>
+  <h1 align="center">${msg}</h1>
   <%String login = (String) request.getSession().getAttribute("user_login");%>
   <%String password = (String) request.getSession().getAttribute("user_pass");%>
   <form action="${pageContext.request.contextPath}/userCabinet.html" method="post">
     <input type="hidden" name="login" value="<%=login%>">
     <input type="hidden" name="password" value="<%=password%>">
-    <input type="submit" value="Back to user cabibet" class="myButton">
+    <input type="submit" value="Back to user cabinet" class="myButton" align="center">
   </form>
 </div>
 </body>
