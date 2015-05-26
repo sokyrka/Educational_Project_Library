@@ -2,6 +2,11 @@ package com.work.dao;
 
 import com.work.common.Book;
 import com.work.common.User;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +16,14 @@ import java.util.List;
  */
 public class UserDAOImpl implements UserDAO{
 
+    private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
     private final DBPool dbPool = new DBPool();
 
     @Override
     public void addUser(String first_name, String second_name, String login, String password) {
 
+        logger.setLevel(Level.INFO);
+        logger.info("add user to db");
         String sqlQuery = "INSERT INTO USER " +
                 "(first_name, second_name, login, password)" +
                 "VALUES" +
