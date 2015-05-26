@@ -1,6 +1,7 @@
 package com.work.dao;
 
 import com.work.common.Request;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,11 +12,14 @@ import java.util.List;
  */
 public class AdminDAOImpl implements AdminDAO {
 
+    private static final Logger logger = Logger.getLogger(AdminDAOImpl.class);
     private final DBPool dbPool = new DBPool();
 
     @Override
     public boolean addBook(String title, String author, int year, int pages) {
         boolean result = false;
+
+        logger.info("add book");
 
         String sqlQuery = "INSERT INTO BOOK " +
                 "(title, author, year, pages)" +
@@ -32,7 +36,7 @@ public class AdminDAOImpl implements AdminDAO {
             result = preparedStatement.execute();
             dbPool.closeConnection(connection);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("addBook", e);
         }
         return result;
     }
@@ -40,6 +44,8 @@ public class AdminDAOImpl implements AdminDAO {
     @Override
     public boolean deleteBook(String title, String author) {
         boolean result = false;
+
+        logger.info("delete book");
 
         String sqlQuery = "DELETE FROM BOOK WHERE title = ? AND author = ?";
         try {
@@ -51,7 +57,7 @@ public class AdminDAOImpl implements AdminDAO {
             result = preparedStatement.execute();
             dbPool.closeConnection(connection);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("deleteBook", e);
         }
         return result;
     }
@@ -59,6 +65,8 @@ public class AdminDAOImpl implements AdminDAO {
     @Override
     public List<Request> allRequests() {
         List<Request> tmpList = new ArrayList<Request>();
+
+        logger.info("all requests");
 
         String sqlQuery = "SELECT * FROM REQUEST WHERE done = FALSE";
         try {
@@ -79,7 +87,7 @@ public class AdminDAOImpl implements AdminDAO {
             }
             dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("allRequests", e);
         }
         return tmpList;
     }
@@ -87,6 +95,8 @@ public class AdminDAOImpl implements AdminDAO {
     @Override
     public boolean updateRequest(int request_id, boolean home, boolean library) {
         boolean result = false;
+
+        logger.info("update request");
 
         String sqlQuery = "UPDATE REQUEST " +
                 "SET done = TRUE, home = ?, library = ? " +
@@ -102,13 +112,15 @@ public class AdminDAOImpl implements AdminDAO {
             dbPool.closeConnection(connection);
             changeBookStatus(request_id);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("updateRequest", e);
         }
         return result;
     }
 
     @Override
     public void changeBookStatus(int request_id){
+
+        logger.info("change book status");
 
         String sqlQuery = "UPDATE BOOK SET busy = TRUE " +
                 "WHERE book_id = (SELECT book_id FROM REQUEST WHERE request_id = ?)";
@@ -120,7 +132,7 @@ public class AdminDAOImpl implements AdminDAO {
             preparedStatement.execute();
             dbPool.closeConnection(connection);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("changeBookStatus", e);
         }
     }
 }

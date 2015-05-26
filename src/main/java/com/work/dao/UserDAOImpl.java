@@ -7,6 +7,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,7 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public void addUser(String first_name, String second_name, String login, String password) {
 
-        logger.setLevel(Level.INFO);
-        logger.info("add user to db");
+        logger.info("add user " + login + " to db");
         String sqlQuery = "INSERT INTO USER " +
                 "(first_name, second_name, login, password)" +
                 "VALUES" +
@@ -39,13 +39,15 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.execute();
             dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("addUser", e);
         }
     }
 
     @Override
     public boolean validateUser(String login, String password){
         boolean result = false;
+
+        logger.info("validate user: " + login);
 
         String sqlQuery = "SELECT * FROM USER";
         try {
@@ -56,11 +58,12 @@ public class UserDAOImpl implements UserDAO{
             while (resultSet.next()){
                 if(resultSet.getString("login").equals(login) && resultSet.getString("password").equals(password)){
                     result = true;
+                    logger.info("user is valid");
                 }
             }
             dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("validateUser", e);
         }
         return result;
     }
@@ -68,6 +71,8 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public List<Book> getAllFreeBook() {
         List<Book> tmpList = new ArrayList<Book>();
+
+        logger.info("get all free books");
 
         String sqlQuery = "SELECT * FROM BOOK WHERE busy = FALSE";
         try {
@@ -86,7 +91,7 @@ public class UserDAOImpl implements UserDAO{
             }
             dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("getAllFreeBook", e);
         }
         return tmpList;
     }
@@ -94,6 +99,8 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public Book findBook(String title) {
         Book book = null;
+
+        logger.info("find book");
 
         String sqlQuery = "SELECT * FROM BOOK WHERE title = ? AND busy = FALSE";
         try {
@@ -113,7 +120,7 @@ public class UserDAOImpl implements UserDAO{
             }
             dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("findBook", e);
         }
         return book;
     }
@@ -121,6 +128,8 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public boolean addRequest(String title, String login){
         boolean result = false;
+
+        logger.info("add request");
 
         String sqlQuery = "INSERT INTO REQUEST (book_id, user_id) VALUES (" +
                 "(SELECT book_id FROM BOOK WHERE title = ?), " +
@@ -134,7 +143,7 @@ public class UserDAOImpl implements UserDAO{
             result = preparedStatement.execute();
             dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("addRequest", e);
         }
         return result;
     }
@@ -142,6 +151,8 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public List<Book> getUsersBook(String login){
         List<Book> tmpList = new ArrayList<Book>();
+
+        logger.info("get users book");
 
         String sqlQuery = "SELECT * FROM BOOK WHERE book_id IN(" +
                 "SELECT book_id FROM REQUEST WHERE user_id = (" +
@@ -165,7 +176,7 @@ public class UserDAOImpl implements UserDAO{
             }
             dbPool.closeConnection(connection);
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("getUsersBook", e);
         }
         return tmpList;
     }
@@ -173,6 +184,8 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public boolean deleteUsersBook(String title, String login) {
         boolean result = false;
+
+        logger.info("delete users book");
 
         String sqlQuery = "UPDATE REQUEST SET home = FALSE , library = FALSE " +
                 "WHERE book_id = (SELECT book_id FROM BOOK WHERE title = ?) " +
@@ -187,13 +200,15 @@ public class UserDAOImpl implements UserDAO{
             dbPool.closeConnection(connection);
             changeBookStatus(title);
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("deleteUsersBook", e);
         }
         return result;
     }
 
     @Override
     public void changeBookStatus(String title){
+
+        logger.info("change book status");
 
         String sqlQuery = "UPDATE BOOK SET busy = FALSE " +
                 "WHERE title = ?";
@@ -205,7 +220,7 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.execute();
             dbPool.closeConnection(connection);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("changeBookStatus", e);
         }
     }
 }
