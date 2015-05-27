@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.work.common.Book" %>
+<%@ page import="java.util.ResourceBundle" %>
 <%--
   Created by IntelliJ IDEA.
   User: Eugine Sokirka
@@ -8,6 +9,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%ResourceBundle resourceBundle = ResourceBundle.getBundle("message", request.getLocale());%>
 <html>
 <head>
   <title>Found book</title>
@@ -20,7 +22,7 @@
 <form action="${pageContext.request.contextPath}/userCabinet.html" method="post" style="float: left">
   <input type="hidden" name="login" value="<%=login%>">
   <input type="hidden" name="password" value="<%=password%>">
-  <input type="submit" value="Back" class="myButton">
+  <input type="submit" value="<%=resourceBundle.getString("label.back")%>" class="myButton">
 </form>
 <div id="wrapper" style="height: auto; width: 500px">
   <form action="${pageContext.request.contextPath}/addedBook.html" method="post">
@@ -44,7 +46,7 @@
       </tr>
     </table><br>
     ${msg}<br>
-    <input class="myButton" type="submit" value="Submit">
+    <input class="myButton" type="submit" value="<%=resourceBundle.getString("label.submit")%>">
   </form>
 </div>
 </body>

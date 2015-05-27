@@ -1,3 +1,4 @@
+<%@ page import="java.util.ResourceBundle" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -7,6 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%ResourceBundle resourceBundle = ResourceBundle.getBundle("message", request.getLocale());%>
 <html>
 <head>
   <title>Find book</title>
@@ -19,17 +21,17 @@
 <form action="${pageContext.request.contextPath}/userCabinet.html" method="post" style="float: left">
   <input type="hidden" name="login" value="<%=login%>">
   <input type="hidden" name="password" value="<%=password%>">
-  <input type="submit" value="Back" class="myButton">
+  <input type="submit" value="<%=resourceBundle.getString("label.back")%>" class="myButton">
 </form>
 <div id="wrapper" style="height: 130px;">
   <div id=form_wrapper>
     <form action="${pageContext.request.contextPath}/foundBook.html" method="post">
       <div id="l">
-        <p style="font-size: 20px">Title</p>
+        <p style="font-size: 20px"><%=resourceBundle.getString("label.title")%></p>
       </div>
       <div id="r">
         <input required type="text" name="title" class="text_field"><br><br>
-        <input type="submit" value="Find" class="myButton">
+        <input type="submit" value="<%=resourceBundle.getString("label.find")%>" class="myButton">
       </div><br><br>
     </form>
   </div><br><br>

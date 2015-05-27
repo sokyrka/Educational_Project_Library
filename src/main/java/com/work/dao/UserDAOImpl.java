@@ -1,13 +1,7 @@
 package com.work.dao;
 
 import com.work.common.Book;
-import com.work.common.User;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
-
-import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +23,6 @@ public class UserDAOImpl implements UserDAO{
                 "VALUES" +
                 "(?, ?, ?, ?)";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, first_name);
@@ -38,7 +31,7 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.setString(4, password);
             preparedStatement.execute();
             dbPool.closeConnection(connection);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             logger.error("addUser", e);
         }
     }
@@ -51,7 +44,6 @@ public class UserDAOImpl implements UserDAO{
 
         String sqlQuery = "SELECT * FROM USER";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
@@ -62,7 +54,7 @@ public class UserDAOImpl implements UserDAO{
                 }
             }
             dbPool.closeConnection(connection);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             logger.error("validateUser", e);
         }
         return result;
@@ -76,7 +68,6 @@ public class UserDAOImpl implements UserDAO{
 
         String sqlQuery = "SELECT * FROM BOOK WHERE busy = FALSE";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
@@ -90,7 +81,7 @@ public class UserDAOImpl implements UserDAO{
                     tmpList.add(book);
             }
             dbPool.closeConnection(connection);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             logger.error("getAllFreeBook", e);
         }
         return tmpList;
@@ -104,7 +95,6 @@ public class UserDAOImpl implements UserDAO{
 
         String sqlQuery = "SELECT * FROM BOOK WHERE title = ? AND busy = FALSE";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, title);
@@ -119,7 +109,7 @@ public class UserDAOImpl implements UserDAO{
                         .build();
             }
             dbPool.closeConnection(connection);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             logger.error("findBook", e);
         }
         return book;
@@ -135,14 +125,13 @@ public class UserDAOImpl implements UserDAO{
                 "(SELECT book_id FROM BOOK WHERE title = ?), " +
                 "(SELECT user_id FROM USER WHERE login = ?))";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, login);
             result = preparedStatement.execute();
             dbPool.closeConnection(connection);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             logger.error("addRequest", e);
         }
         return result;
@@ -159,7 +148,6 @@ public class UserDAOImpl implements UserDAO{
                 "SELECT user_id FROM USER WHERE login = ?) " +
                 "AND done = TRUE AND (home = TRUE OR library = TRUE)) ";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, login);
@@ -175,7 +163,7 @@ public class UserDAOImpl implements UserDAO{
                     tmpList.add(book);
             }
             dbPool.closeConnection(connection);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             logger.error("getUsersBook", e);
         }
         return tmpList;
@@ -191,7 +179,6 @@ public class UserDAOImpl implements UserDAO{
                 "WHERE book_id = (SELECT book_id FROM BOOK WHERE title = ?) " +
                 "AND user_id = (SELECT user_id FROM USER WHERE login = ?)";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, title);
@@ -199,7 +186,7 @@ public class UserDAOImpl implements UserDAO{
             result = preparedStatement.execute();
             dbPool.closeConnection(connection);
             changeBookStatus(title);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             logger.error("deleteUsersBook", e);
         }
         return result;
@@ -213,13 +200,12 @@ public class UserDAOImpl implements UserDAO{
         String sqlQuery = "UPDATE BOOK SET busy = FALSE " +
                 "WHERE title = ?";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, title);
             preparedStatement.execute();
             dbPool.closeConnection(connection);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             logger.error("changeBookStatus", e);
         }
     }
