@@ -21,7 +21,9 @@ public class DBPool {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 pool.add(DriverManager.getConnection(url, username, pass));
-            } catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
