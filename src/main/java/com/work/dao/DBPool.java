@@ -1,8 +1,10 @@
 package com.work.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -11,21 +13,32 @@ import java.util.concurrent.BlockingQueue;
  */
 public class DBPool {
 
-    private static final String url = "jdbc:mysql://176.37.217.24:3306/zhenya_test1";
-    private static final String username = "quattro";
-    private static final String pass = "Zhenya2015";
     private BlockingQueue<Connection> pool = new ArrayBlockingQueue<Connection>(100);
+    private Connection connection;
 
     public void createConnection(){
-        if(pool.isEmpty()){
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                pool.add(DriverManager.getConnection(url, username, pass));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+        try {
+        Properties properties = new Properties();
+        properties.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
+        properties.put(Context.PROVIDER_URL, "t3://localhost:7001");
+        Context context = new InitialContext(properties);
+        Object obj = context.lookup("jdbc/myDB");
+
+        DataSource ds = (DataSource) obj;
+        connection = ds.getConnection();
+
+            if(pool.isEmpty()){
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    pool.add(connection);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
+        context.close();
+
+        } catch (Exception e) {
+        e.printStackTrace();
         }
     }
 
