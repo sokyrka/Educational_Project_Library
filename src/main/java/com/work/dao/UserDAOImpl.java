@@ -18,10 +18,10 @@ public class UserDAOImpl implements UserDAO{
     public void addUser(String first_name, String second_name, String login, String password) {
 
         logger.info("add user " + login + " to db");
-        String sqlQuery = "INSERT INTO USER " +
-                "(first_name, second_name, login, password)" +
+        String sqlQuery = "INSERT INTO LUSER " +
+                "(user_id, first_name, second_name, login, password)" +
                 "VALUES" +
-                "(?, ?, ?, ?)";
+                "(SEQ_LUSER.nextval, ?, ?, ?, ?)";
         try {
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserDAO{
 
         logger.info("validate user: " + login);
 
-        String sqlQuery = "SELECT * FROM USER";
+        String sqlQuery = "SELECT * FROM LUSER";
         try {
             Connection connection = dbPool.getConnection();
             Statement statement = connection.createStatement();
@@ -66,7 +66,7 @@ public class UserDAOImpl implements UserDAO{
 
         logger.info("get all free books");
 
-        String sqlQuery = "SELECT * FROM BOOK WHERE busy = FALSE";
+        String sqlQuery = "SELECT * FROM BOOK WHERE busy = 0";
         try {
             Connection connection = dbPool.getConnection();
             Statement statement = connection.createStatement();
@@ -93,7 +93,7 @@ public class UserDAOImpl implements UserDAO{
 
         logger.info("find book");
 
-        String sqlQuery = "SELECT * FROM BOOK WHERE title = ? AND busy = FALSE";
+        String sqlQuery = "SELECT * FROM BOOK WHERE title = ? AND busy = 0";
         try {
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -121,9 +121,9 @@ public class UserDAOImpl implements UserDAO{
 
         logger.info("add request");
 
-        String sqlQuery = "INSERT INTO REQUEST (book_id, user_id) VALUES (" +
+        String sqlQuery = "INSERT INTO REQUEST (request_id, book_id, user_id) VALUES (SEQ_REQUEST.nextval," +
                 "(SELECT book_id FROM BOOK WHERE title = ?), " +
-                "(SELECT user_id FROM USER WHERE login = ?))";
+                "(SELECT user_id FROM LUSER WHERE login = ?))";
         try {
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -145,8 +145,8 @@ public class UserDAOImpl implements UserDAO{
 
         String sqlQuery = "SELECT * FROM BOOK WHERE book_id IN(" +
                 "SELECT book_id FROM REQUEST WHERE user_id = (" +
-                "SELECT user_id FROM USER WHERE login = ?) " +
-                "AND done = TRUE AND (home = TRUE OR library = TRUE)) ";
+                "SELECT user_id FROM LUSER WHERE login = ?) " +
+                "AND done = 1 AND (home = 1 OR library = 1)) ";
         try {
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -175,9 +175,9 @@ public class UserDAOImpl implements UserDAO{
 
         logger.info("delete users book");
 
-        String sqlQuery = "UPDATE REQUEST SET home = FALSE , library = FALSE " +
+        String sqlQuery = "UPDATE REQUEST SET home = 0 , library = 0 " +
                 "WHERE book_id = (SELECT book_id FROM BOOK WHERE title = ?) " +
-                "AND user_id = (SELECT user_id FROM USER WHERE login = ?)";
+                "AND user_id = (SELECT user_id FROM LUSER WHERE login = ?)";
         try {
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -197,7 +197,7 @@ public class UserDAOImpl implements UserDAO{
 
         logger.info("change book status");
 
-        String sqlQuery = "UPDATE BOOK SET busy = FALSE " +
+        String sqlQuery = "UPDATE BOOK SET busy = 0 " +
                 "WHERE title = ?";
         try {
             Connection connection = dbPool.getConnection();

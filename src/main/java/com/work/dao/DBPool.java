@@ -21,7 +21,7 @@ public class DBPool {
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
         Context context = new InitialContext(properties);
-        Object obj = context.lookup("jdbc/myDB");
+        Object obj = context.lookup("oracle/oracleDB");
 
         DataSource ds = (DataSource) obj;
         connection = ds.getConnection();

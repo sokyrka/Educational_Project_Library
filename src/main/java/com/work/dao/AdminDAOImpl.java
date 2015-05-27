@@ -21,9 +21,9 @@ public class AdminDAOImpl implements AdminDAO {
         logger.info("add book");
 
         String sqlQuery = "INSERT INTO BOOK " +
-                "(title, author, year, pages)" +
+                "(book_id, title, author, year, pages)" +
                 "VALUES" +
-                "(?, ?, ?, ?)";
+                "(SEQ_BOOK.nextval, ?, ?, ?, ?)";
         try {
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -65,7 +65,7 @@ public class AdminDAOImpl implements AdminDAO {
 
         logger.info("all requests");
 
-        String sqlQuery = "SELECT * FROM REQUEST WHERE done = FALSE";
+        String sqlQuery = "SELECT * FROM REQUEST WHERE done = 0";
         try {
             Connection connection = dbPool.getConnection();
             Statement statement = connection.createStatement();
@@ -95,7 +95,7 @@ public class AdminDAOImpl implements AdminDAO {
         logger.info("update request");
 
         String sqlQuery = "UPDATE REQUEST " +
-                "SET done = TRUE, home = ?, library = ? " +
+                "SET done = 1, home = ?, library = ? " +
                 "WHERE request_id = ?";
         try {
             Connection connection = dbPool.getConnection();
@@ -117,7 +117,7 @@ public class AdminDAOImpl implements AdminDAO {
 
         logger.info("change book status");
 
-        String sqlQuery = "UPDATE BOOK SET busy = TRUE " +
+        String sqlQuery = "UPDATE BOOK SET busy = 1 " +
                 "WHERE book_id = (SELECT book_id FROM REQUEST WHERE request_id = ?)";
         try {
             Connection connection = dbPool.getConnection();
