@@ -20,7 +20,6 @@ public class DBPool {
         try {
         Properties properties = new Properties();
         properties.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
-        properties.put(Context.PROVIDER_URL, "t3://localhost:7001");
         Context context = new InitialContext(properties);
         Object obj = context.lookup("jdbc/myDB");
 
@@ -28,15 +27,9 @@ public class DBPool {
         connection = ds.getConnection();
 
             if(pool.isEmpty()){
-                try {
-                    Class.forName("com.mysql.jdbc.Driver");
-                    pool.add(connection);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                pool.add(connection);
             }
         context.close();
-
         } catch (Exception e) {
         e.printStackTrace();
         }

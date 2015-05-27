@@ -1,4 +1,5 @@
 <%@ page import="java.util.ResourceBundle" %>
+<%@ page import="java.util.Locale" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%--
@@ -10,7 +11,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%ResourceBundle resourceBundle = ResourceBundle.getBundle("message", request.getLocale());%>
-
 <html>
 <head>
   <title>Welcome</title>
@@ -23,7 +23,6 @@
   <div id=form_wrapper>
     <form action="${pageContext.request.contextPath}/userCabinet.html" method="post">
       <div id="l">
-        <p>${rb.label.login}</p>
         <p><%=resourceBundle.getString("label.login")%></p>
         <p><%=resourceBundle.getString("label.password")%></p></p>
       </div>
