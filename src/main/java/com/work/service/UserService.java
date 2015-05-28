@@ -1,6 +1,6 @@
 package com.work.service;
 
-import com.work.common.Book;
+import com.work.entity.Book;
 
 import java.util.List;
 

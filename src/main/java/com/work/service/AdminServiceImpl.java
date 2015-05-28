@@ -1,6 +1,6 @@
 package com.work.service;
 
-import com.work.common.Request;
+import com.work.entity.Request;
 import com.work.dao.AdminDAO;
 
 import java.util.List;

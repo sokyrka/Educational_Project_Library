@@ -4,9 +4,9 @@
              version="2.0">
 
     <persistence-unit name="myJPA" transaction-type="RESOURCE_LOCAL">
-        <class>com.work.common.Book</class>
-        <class>com.work.common.Request</class>
-        <class>com.work.common.User</class>
+        <class>com.work.entity.Book</class>
+        <class>com.work.entity.Request</class>
+        <class>com.work.entity.User</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.3.90:1521/SOA11G"/>

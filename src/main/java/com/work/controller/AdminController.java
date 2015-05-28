@@ -1,7 +1,7 @@
 package com.work.controller;
 
 import org.apache.log4j.Logger;
-import com.work.common.Request;
+import com.work.entity.Request;
 import com.work.dao.AdminDAOImpl;
 import com.work.service.AdminService;
 import com.work.service.AdminServiceImpl;

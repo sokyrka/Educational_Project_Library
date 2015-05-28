@@ -1,6 +1,6 @@
 package com.work.dao;
 
-import com.work.common.Book;
+import com.work.entity.Book;
 import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,12 +72,11 @@ public class UserDAOImpl implements UserDAO{
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()){
-                    Book book = new Book.Builder()
-                            .title(resultSet.getString("title"))
-                            .author(resultSet.getString("author"))
-                            .year(resultSet.getInt("year"))
-                            .pages(resultSet.getInt("pages"))
-                            .build();
+                    Book book = new Book(resultSet.getString("title"),
+                            resultSet.getString("author"),
+                            resultSet.getInt("year"),
+                            resultSet.getInt("pages"),
+                            resultSet.getInt("busy"));
                     tmpList.add(book);
             }
             dbPool.closeConnection(connection);
@@ -101,12 +100,11 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                book = new Book.Builder()
-                        .title(resultSet.getString("title"))
-                        .author(resultSet.getString("author"))
-                        .year(resultSet.getInt("year"))
-                        .pages(resultSet.getInt("pages"))
-                        .build();
+                book = new Book(resultSet.getString("title"),
+                        resultSet.getString("author"),
+                        resultSet.getInt("year"),
+                        resultSet.getInt("pages"),
+                        resultSet.getInt("busy"));
             }
             dbPool.closeConnection(connection);
         } catch (SQLException e) {
@@ -154,12 +152,11 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                    Book book = new Book.Builder()
-                            .title(resultSet.getString("title"))
-                            .author(resultSet.getString("author"))
-                            .year(resultSet.getInt("year"))
-                            .pages(resultSet.getInt("pages"))
-                            .build();
+                    Book book = new Book(resultSet.getString("title"),
+                        resultSet.getString("author"),
+                        resultSet.getInt("year"),
+                        resultSet.getInt("pages"),
+                        resultSet.getInt("busy"));
                     tmpList.add(book);
             }
             dbPool.closeConnection(connection);

@@ -1,6 +1,6 @@
 package com.work.dao;
 
-import com.work.common.Request;
+import com.work.entity.Request;
 import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
@@ -71,14 +71,12 @@ public class AdminDAOImpl implements AdminDAO {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()){
-                Request request = new Request.Builder()
-                        .request_id(resultSet.getInt("request_id"))
-                        .book_id(resultSet.getInt("book_id"))
-                        .user_id(resultSet.getInt("user_id"))
-                        .done(resultSet.getBoolean("done"))
-                        .home(resultSet.getBoolean("home"))
-                        .library(resultSet.getBoolean("library"))
-                        .build();
+                Request request = new Request(resultSet.getInt("book_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("done"),
+                        resultSet.getInt("home"),
+                        resultSet.getInt("library"));
+
                 tmpList.add(request);
             }
             dbPool.closeConnection(connection);

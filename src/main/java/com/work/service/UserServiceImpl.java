@@ -1,6 +1,6 @@
 package com.work.service;
 
-import com.work.common.Book;
+import com.work.entity.Book;
 import com.work.dao.UserDAO;
 import java.util.List;
 

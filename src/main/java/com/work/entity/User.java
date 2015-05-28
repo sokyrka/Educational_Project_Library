@@ -1,15 +1,18 @@
 package com.work.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.annotation.Generated;
+import javax.persistence.*;
 
 /**
  * Created by Eugine Sokirka on 28.05.2015.
  */
 @Entity
+@Table(name = "LUSER")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_sequence")
+    @SequenceGenerator(name = "user_id_sequence", sequenceName = "SEQ_LUSER", allocationSize = 1)
     private int user_id;
 
     private String first_name;
@@ -21,8 +24,7 @@ public class User {
 
     }
 
-    public User(int user_id, String first_name, String second_name, String login, String password) {
-        this.user_id = user_id;
+    public User(String first_name, String second_name, String login, String password) {
         this.first_name = first_name;
         this.second_name = second_name;
         this.login = login;

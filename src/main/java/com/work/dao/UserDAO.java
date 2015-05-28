@@ -1,7 +1,6 @@
 package com.work.dao;
 
-import com.work.common.Book;
-import com.work.common.User;
+import com.work.entity.Book;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public interface UserDAO {
 
     List<Book> getAllFreeBook();
 
-    Book findBook(String title);
+    com.work.entity.Book findBook(String title);
 
     boolean addRequest(String title, String login);
 

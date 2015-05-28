@@ -1,7 +1,6 @@
 package com.work.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Eugine Sokirka on 28.05.2015.
@@ -10,23 +9,26 @@ import javax.persistence.Id;
 public class Book {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_id_sequence")
+    @SequenceGenerator(name = "book_id_sequence", sequenceName = "SEQ_BOOK", allocationSize = 1)
     private int book_id;
 
     private String title;
     private String author;
     private int year;
     private int pages;
+    private int busy;
 
     public Book(){
 
     }
 
-    public Book(int book_id, String title, int year, String author, int pages) {
-        this.book_id = book_id;
+    public Book(String title, String author, int year, int pages, int busy) {
         this.title = title;
-        this.year = year;
         this.author = author;
+        this.year = year;
         this.pages = pages;
+        this.busy = busy;
     }
 
     public int getBook_id() {
@@ -53,14 +55,6 @@ public class Book {
         this.author = author;
     }
 
-    public int getPages() {
-        return pages;
-    }
-
-    public void setPages(int pages) {
-        this.pages = pages;
-    }
-
     public int getYear() {
         return year;
     }
@@ -69,14 +63,31 @@ public class Book {
         this.year = year;
     }
 
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public int getBusy() {
+        return busy;
+    }
+
+    public void setBusy(int busy) {
+        this.busy = busy;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + book_id +
+                "book_id=" + book_id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", year=" + year +
                 ", pages=" + pages +
+                ", busy=" + busy +
                 '}';
     }
 }

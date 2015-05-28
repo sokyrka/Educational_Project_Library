@@ -1,7 +1,6 @@
 package com.work.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Eugine Sokirka on 28.05.2015.
@@ -10,20 +9,21 @@ import javax.persistence.Id;
 public class Request {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "request_id_sequence")
+    @SequenceGenerator(name = "request_id_sequence", sequenceName = "SEQ_REQUEST", allocationSize = 1)
     private int request_id;
 
     private int book_id;
     private int user_id;
-    private boolean done;
-    private boolean home;
-    private boolean library;
+    private int done;
+    private int home;
+    private int library;
 
     public Request(){
 
     }
 
-    public Request(int request_id, int book_id, int user_id, boolean done, boolean home, boolean library) {
-        this.request_id = request_id;
+    public Request(int book_id, int user_id, int done, int home, int library) {
         this.book_id = book_id;
         this.user_id = user_id;
         this.done = done;
@@ -55,27 +55,27 @@ public class Request {
         this.user_id = user_id;
     }
 
-    public boolean isDone() {
+    public int getDone() {
         return done;
     }
 
-    public void setDone(boolean done) {
+    public void setDone(int done) {
         this.done = done;
     }
 
-    public boolean isHome() {
+    public int getHome() {
         return home;
     }
 
-    public void setHome(boolean home) {
+    public void setHome(int home) {
         this.home = home;
     }
 
-    public boolean isLibrary() {
+    public int getLibrary() {
         return library;
     }
 
-    public void setLibrary(boolean library) {
+    public void setLibrary(int library) {
         this.library = library;
     }
 
