@@ -1,11 +1,8 @@
 package com.work.controller;
 
-import com.work.dao.AdminDAO;
-import com.work.dao.AdminDAOFactory;
-import com.work.dao.jpa.AdminJPAImpl;
+import com.work.dao.factory.AdminDAOFactory;
 import org.apache.log4j.Logger;
 import com.work.entity.Request;
-import com.work.dao.jdbc.AdminDAOImpl;
 import com.work.service.AdminService;
 import com.work.service.AdminServiceImpl;
 import org.springframework.stereotype.Controller;

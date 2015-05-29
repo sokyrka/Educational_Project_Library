@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Eugine Sokirka on 29.05.2015.
  */
-public class AdminJPAImpl implements AdminDAO{
+public class AdminJPAImpl implements AdminDAO {
 
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("weblogicDatasource");
     private EntityManager em = emf.createEntityManager();

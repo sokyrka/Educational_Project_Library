@@ -1,6 +1,6 @@
 package com.work.controller;
 
-import com.work.dao.UserDAOFactory;
+import com.work.dao.factory.UserDAOFactory;
 import com.work.entity.Book;
 import com.work.service.UserService;
 import com.work.service.UserServiceImpl;

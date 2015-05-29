@@ -1,6 +1,8 @@
-package com.work.dao;
+package com.work.dao.factory;
 
-import com.work.dao.jdbc.AdminDAOImpl;
+import com.work.dao.AdminDAO;
+import com.work.dao.hibernate.AdminHibernateImpl;
+import com.work.dao.jdbc.AdminJDBCImpl;
 import com.work.dao.jpa.AdminJPAImpl;
 
 /**
@@ -14,9 +16,11 @@ public class AdminDAOFactory {
         }
 
         if(adminDAOType.equalsIgnoreCase("JDBC")){
-            return new AdminDAOImpl();
+            return new AdminJDBCImpl();
         }else if(adminDAOType.equalsIgnoreCase("JPA")){
             return new AdminJPAImpl();
+        }else if(adminDAOType.equalsIgnoreCase("HIBERNATE")){
+            return new AdminHibernateImpl();
         }
         return null;
     }

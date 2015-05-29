@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * Created by Eugine Sokirka on 21.05.2015.
  */
-public class AdminDAOImpl implements AdminDAO {
+public class AdminJDBCImpl implements AdminDAO {
 
-    private static final Logger logger = Logger.getLogger(AdminDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(AdminJDBCImpl.class);
     private final DBPool dbPool = new DBPool();
 
     @Override

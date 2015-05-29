@@ -1,6 +1,8 @@
-package com.work.dao;
+package com.work.dao.factory;
 
-import com.work.dao.jdbc.UserDAOImpl;
+import com.work.dao.UserDAO;
+import com.work.dao.hibernate.UserHibernateImpl;
+import com.work.dao.jdbc.UserJDBCImpl;
 import com.work.dao.jpa.UserJPAImpl;
 
 /**
@@ -14,9 +16,11 @@ public class UserDAOFactory {
         }
 
         if(userDAOType.equalsIgnoreCase("JDBC")){
-            return new UserDAOImpl();
+            return new UserJDBCImpl();
         }else if(userDAOType.equalsIgnoreCase("JPA")){
             return new UserJPAImpl();
+        }else if(userDAOType.equalsIgnoreCase("HIBERNATE")){
+            return new UserHibernateImpl();
         }
         return null;
     }

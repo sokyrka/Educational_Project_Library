@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * Created by Eugine Sokirka on 19.05.2015.
  */
-public class UserDAOImpl implements UserDAO {
+public class UserJDBCImpl implements UserDAO {
 
-    private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(UserJDBCImpl.class);
     private final DBPool dbPool = new DBPool();
 
     @Override
