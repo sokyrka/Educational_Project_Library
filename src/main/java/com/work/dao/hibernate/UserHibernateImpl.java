@@ -2,6 +2,8 @@ package com.work.dao.hibernate;
 
 import com.work.dao.UserDAO;
 import com.work.entity.Book;
+import com.work.entity.User;
+import org.hibernate.Session;
 
 import java.util.List;
 
@@ -10,9 +12,16 @@ import java.util.List;
  */
 public class UserHibernateImpl implements UserDAO {
 
+    private Session session = null;
+
     @Override
     public void addUser(String first_name, String second_name, String login, String password) {
-
+        User user = new User(first_name, second_name, login, password);
+        session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
