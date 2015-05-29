@@ -1,8 +1,7 @@
 package com.work.controller;
 
-import com.work.dao.jpa.UserJPAImpl;
+import com.work.dao.UserDAOFactory;
 import com.work.entity.Book;
-import com.work.dao.jdbc.UserDAOImpl;
 import com.work.service.UserService;
 import com.work.service.UserServiceImpl;
 import org.apache.log4j.Logger;
@@ -20,7 +19,8 @@ import java.util.List;
 public class UserController {
 
     private final static Logger logger = Logger.getLogger(UserController.class);
-    private UserService userService = new UserServiceImpl(new UserJPAImpl());
+    private UserDAOFactory userDAOFactory = new UserDAOFactory();
+    private UserService userService = new UserServiceImpl(userDAOFactory.getUserDAO("JPA"));
 
     @RequestMapping(value = "/welcomePage.html")
     public String welcomePage(){

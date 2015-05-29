@@ -109,7 +109,6 @@ public class UserJPAImpl implements UserDAO {
 
         em.getTransaction().begin();
         Request request = em.find(Request.class, request_id);
-        request.setDone(1);
         request.setHome(0);
         request.setLibrary(0);
         em.merge(request);

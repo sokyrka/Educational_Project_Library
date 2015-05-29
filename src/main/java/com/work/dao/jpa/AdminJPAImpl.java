@@ -52,6 +52,7 @@ public class AdminJPAImpl implements AdminDAO{
         Request request = em.find(Request.class, request_id);
         if(request != null){
             em.getTransaction().begin();
+            request.setDone(1);
             request.setHome(home);
             request.setLibrary(library);
             em.merge(request);
@@ -67,6 +68,7 @@ public class AdminJPAImpl implements AdminDAO{
         TypedQuery<Integer> bookTypedQuery = em.createQuery("SELECT b.book_id FROM Request b WHERE b.request_id=:request_id", Integer.class);
         bookTypedQuery.setParameter("request_id", request_id);
         Integer book_id = bookTypedQuery.getSingleResult();
+        System.out.println(book_id);
 
         Book book = em.find(Book.class, book_id);
 

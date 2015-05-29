@@ -1,5 +1,7 @@
 package com.work.controller;
 
+import com.work.dao.AdminDAO;
+import com.work.dao.AdminDAOFactory;
 import com.work.dao.jpa.AdminJPAImpl;
 import org.apache.log4j.Logger;
 import com.work.entity.Request;
@@ -21,7 +23,8 @@ import java.util.List;
 public class AdminController {
 
     private final static Logger logger = Logger.getLogger(AdminController.class);
-    private AdminService adminService = new AdminServiceImpl(new AdminJPAImpl());
+    private AdminDAOFactory adminDAOFactory = new AdminDAOFactory();
+    private AdminService adminService = new AdminServiceImpl(adminDAOFactory.getAdminDAO("JPA"));
 
     @RequestMapping(value = "/admin.html")
     public String adminCabinet(){
