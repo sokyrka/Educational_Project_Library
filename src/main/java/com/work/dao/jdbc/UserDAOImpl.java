@@ -1,5 +1,7 @@
-package com.work.dao;
+package com.work.dao.jdbc;
 
+import com.work.dao.DBPool;
+import com.work.dao.UserDAO;
 import com.work.entity.Book;
 import org.apache.log4j.Logger;
 import java.sql.*;
@@ -9,7 +11,7 @@ import java.util.List;
 /**
  * Created by Eugine Sokirka on 19.05.2015.
  */
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserDAO {
 
     private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
     private final DBPool dbPool = new DBPool();

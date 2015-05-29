@@ -1,7 +1,8 @@
 package com.work.controller;
 
+import com.work.dao.jpa.UserJPAImpl;
 import com.work.entity.Book;
-import com.work.dao.UserDAOImpl;
+import com.work.dao.jdbc.UserDAOImpl;
 import com.work.service.UserService;
 import com.work.service.UserServiceImpl;
 import org.apache.log4j.Logger;
@@ -19,7 +20,7 @@ import java.util.List;
 public class UserController {
 
     private final static Logger logger = Logger.getLogger(UserController.class);
-    private UserService userService = new UserServiceImpl(new UserDAOImpl());
+    private UserService userService = new UserServiceImpl(new UserJPAImpl());
 
     @RequestMapping(value = "/welcomePage.html")
     public String welcomePage(){
@@ -85,11 +86,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/freeBooks.html")
-    public String getAllFreeBooks(Model model){
+    public ModelAndView getAllFreeBooks(){
         logger.info("get all free books");
         List<Book> bookList = userService.getAllFreeBook();
-        model.addAttribute("books", bookList);
-        return "user/allBooks";
+        ModelAndView modelAndView = new ModelAndView("user/allBooks");
+        modelAndView.addObject("books", bookList);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/findBook.html")

@@ -31,6 +31,7 @@
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
           <factory-entry name="JpaExample" value="f54044ab-801f-4972-820a-0ef13dbbdb75" />
+          <factory-entry name="myJPA" value="f54044ab-801f-4972-820a-0ef13dbbdb75" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>

@@ -1,5 +1,6 @@
-package com.work.dao;
+package com.work.dao.jpa;
 
+import com.work.dao.UserDAO;
 import com.work.entity.Book;
 import com.work.entity.Request;
 import com.work.entity.User;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class UserJPAImpl implements UserDAO {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("myJPA");
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("weblogicDatasource");
     private EntityManager em = emf.createEntityManager();
 
     @Override
@@ -40,7 +41,8 @@ public class UserJPAImpl implements UserDAO {
     @Override
     public List<Book> getAllFreeBook() {
         TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b", Book.class);
-        return query.getResultList();
+        List<Book> tmpList = query.getResultList();
+        return tmpList;
     }
 
     @Override
@@ -100,9 +102,18 @@ public class UserJPAImpl implements UserDAO {
         userTypedQuery.setParameter("login", login);
         Integer user_id = userTypedQuery.getSingleResult();
 
-        Query query = em.createQuery("UPDATE Request r SET r.home=0, r.library=0 WHERE r.book_id =:book_id AND r.user_id=:user_id ");
+        TypedQuery<Integer> query = em.createQuery("SELECT r.request_id FROM Request r WHERE r.book_id =:book_id AND r.user_id=:user_id", Integer.class);
         query.setParameter("book_id", book_id);
         query.setParameter("user_id", user_id);
+        Integer request_id = query.getSingleResult();
+
+        em.getTransaction().begin();
+        Request request = em.find(Request.class, request_id);
+        request.setDone(1);
+        request.setHome(0);
+        request.setLibrary(0);
+        em.merge(request);
+        em.getTransaction().commit();
 
         changeBookStatus(title);
         return true;

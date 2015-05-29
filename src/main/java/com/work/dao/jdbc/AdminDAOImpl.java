@@ -1,5 +1,7 @@
-package com.work.dao;
+package com.work.dao.jdbc;
 
+import com.work.dao.AdminDAO;
+import com.work.dao.DBPool;
 import com.work.entity.Request;
 import org.apache.log4j.Logger;
 import java.sql.*;
@@ -87,7 +89,7 @@ public class AdminDAOImpl implements AdminDAO {
     }
 
     @Override
-    public boolean updateRequest(int request_id, boolean home, boolean library) {
+    public boolean updateRequest(int request_id, int home, int library) {
         boolean result = false;
 
         logger.info("update request");
@@ -98,8 +100,8 @@ public class AdminDAOImpl implements AdminDAO {
         try {
             Connection connection = dbPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setBoolean(1, home);
-            preparedStatement.setBoolean(2, library);
+            preparedStatement.setInt(1, home);
+            preparedStatement.setInt(2, library);
             preparedStatement.setInt(3, request_id);
             result = preparedStatement.execute();
             dbPool.closeConnection(connection);

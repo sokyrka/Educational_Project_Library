@@ -3,7 +3,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
 
-    <persistence-unit name="myJPA" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="jdbc" transaction-type="RESOURCE_LOCAL">
         <class>com.work.entity.Book</class>
         <class>com.work.entity.Request</class>
         <class>com.work.entity.User</class>
@@ -12,6 +12,17 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.3.90:1521/SOA11G"/>
             <property name="javax.persistence.jdbc.user" value="soatest"/>
             <property name="javax.persistence.jdbc.password" value="soatest"/>
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="weblogicDatasource" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>oracle/oracleDB</jta-data-source>
+        <class>com.work.entity.Book</class>
+        <class>com.work.entity.Request</class>
+        <class>com.work.entity.User</class>
+        <properties>
+            <property name="javax.persistence.jtaDataSource" value="oracle/oracleDB"/>
         </properties>
     </persistence-unit>
 

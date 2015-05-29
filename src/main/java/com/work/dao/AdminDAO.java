@@ -15,7 +15,7 @@ public interface AdminDAO {
 
     List<Request> allRequests();
 
-    boolean updateRequest(int request_id, boolean home, boolean library);
+    boolean updateRequest(int request_id, int home, int library);
 
     void changeBookStatus(int request_id);
 }

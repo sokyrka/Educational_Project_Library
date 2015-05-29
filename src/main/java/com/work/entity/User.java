@@ -1,6 +1,5 @@
 package com.work.entity;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 
 /**

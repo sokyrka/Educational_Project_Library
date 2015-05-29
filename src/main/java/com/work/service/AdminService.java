@@ -15,5 +15,5 @@ public interface AdminService {
 
     List<Request> allRequests();
 
-    boolean updateRequest(int request_id, boolean home, boolean library);
+    boolean updateRequest(int request_id, int home, int library);
 }

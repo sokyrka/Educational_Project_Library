@@ -32,7 +32,7 @@
         <th>Done</th>
       </tr>
       </thead>
-      <%List<Request> array = (ArrayList<Request>) request.getAttribute("requestList");%>
+      <%List<Request> array = (List<Request>) request.getAttribute("requestList");%>
       <%if(array.isEmpty()){%>
       <tr>
         <h1>There are no requests</h1>

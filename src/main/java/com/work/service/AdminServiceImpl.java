@@ -32,7 +32,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public boolean updateRequest(int request_id, boolean home, boolean library) {
+    public boolean updateRequest(int request_id, int home, int library) {
         return adminDAO.updateRequest(request_id, home, library);
     }
 }

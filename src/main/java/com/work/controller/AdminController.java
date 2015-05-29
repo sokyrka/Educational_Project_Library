@@ -1,8 +1,9 @@
 package com.work.controller;
 
+import com.work.dao.jpa.AdminJPAImpl;
 import org.apache.log4j.Logger;
 import com.work.entity.Request;
-import com.work.dao.AdminDAOImpl;
+import com.work.dao.jdbc.AdminDAOImpl;
 import com.work.service.AdminService;
 import com.work.service.AdminServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ import java.util.List;
 public class AdminController {
 
     private final static Logger logger = Logger.getLogger(AdminController.class);
-    private AdminService adminService = new AdminServiceImpl(new AdminDAOImpl());
+    private AdminService adminService = new AdminServiceImpl(new AdminJPAImpl());
 
     @RequestMapping(value = "/admin.html")
     public String adminCabinet(){
@@ -41,9 +42,9 @@ public class AdminController {
                                  @RequestParam("request_id") int request_id){
         logger.info("update request");
         if(radio_param.equals("home")){
-            adminService.updateRequest(request_id, true, false);
+            adminService.updateRequest(request_id, 1, 0);
         }else {
-            adminService.updateRequest(request_id, false, true);
+            adminService.updateRequest(request_id, 0, 1);
         }
         return "admin/successfulUpdatedRequest";
     }

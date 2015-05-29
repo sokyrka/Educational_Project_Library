@@ -39,7 +39,7 @@
         <th>Add</th>
       </tr>
       </thead>
-      <%List<Book> array = (ArrayList<Book>) request.getAttribute("books");%>
+      <%List<Book> array = (List<Book>) request.getAttribute("books");%>
       <%if(array.isEmpty()){%>
       <tr>
         <h1>There are no free books</h1>
