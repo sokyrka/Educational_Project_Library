@@ -20,7 +20,7 @@ public class UserController {
 
     private final static Logger logger = Logger.getLogger(UserController.class);
     private UserDAOFactory userDAOFactory = new UserDAOFactory();
-    private UserService userService = new UserServiceImpl(userDAOFactory.getUserDAO("JPA"));
+    private UserService userService = new UserServiceImpl(userDAOFactory.getUserDAO("HIBERNATE"));
 
     @RequestMapping(value = "/welcomePage.html")
     public String welcomePage(){

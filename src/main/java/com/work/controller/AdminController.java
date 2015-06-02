@@ -21,7 +21,7 @@ public class AdminController {
 
     private final static Logger logger = Logger.getLogger(AdminController.class);
     private AdminDAOFactory adminDAOFactory = new AdminDAOFactory();
-    private AdminService adminService = new AdminServiceImpl(adminDAOFactory.getAdminDAO("JPA"));
+    private AdminService adminService = new AdminServiceImpl(adminDAOFactory.getAdminDAO("HIBERNATE"));
 
     @RequestMapping(value = "/admin.html")
     public String adminCabinet(){

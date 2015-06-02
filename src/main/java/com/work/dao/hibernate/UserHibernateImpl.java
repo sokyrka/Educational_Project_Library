@@ -15,41 +15,39 @@ import java.util.List;
  */
 public class UserHibernateImpl implements UserDAO {
 
-    private Session session = HibernateUtil.getSessionFactory().openSession();
-
     @Override
     public void addUser(String first_name, String second_name, String login, String password) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         User user = new User(first_name, second_name, login, password);
         session.getTransaction().begin();
         session.save(user);
         session.getTransaction().commit();
-        HibernateUtil.getSessionFactory().close();
     }
 
     @Override
     public boolean validateUser(String login, String password) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("from User ");
         List<User> userLiSt = query.list();
         for(User user : userLiSt){
             if(user.getLogin().equals(login) && user.getPassword().equals(password)){
-                HibernateUtil.getSessionFactory().close();
                 return true;
             }
         }
-        HibernateUtil.getSessionFactory().close();
         return false;
     }
 
     @Override
     public List<Book> getAllFreeBook() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("from Book ");
         List<Book> bookList = query.list();
-        HibernateUtil.getSessionFactory().close();
         return bookList;
     }
 
     @Override
     public Book findBook(String title) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("from Book where title=:title");
         query.setParameter("title", title);
         List<Book> bookList = query.list();
@@ -59,6 +57,7 @@ public class UserHibernateImpl implements UserDAO {
 
     @Override
     public boolean addRequest(String title, String login) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Query queryBook_Id = session.createQuery("from Book where title=:title");
         queryBook_Id.setParameter("title", title);
         Book book = (Book) queryBook_Id.list().get(0);
@@ -68,17 +67,16 @@ public class UserHibernateImpl implements UserDAO {
         queryUser_Id.setParameter("login", login);
         User user = (User) queryUser_Id.list().get(0);
         int user_id = user.getUser_id();
-
         Request request = new Request(book_id, user_id, 0, 0, 0);
         session.getTransaction().begin();
         session.save(request);
         session.getTransaction().commit();
-        HibernateUtil.getSessionFactory().close();
         return false;
     }
 
     @Override
     public List<Book> getUsersBook(String login) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Query queryUser_Id = session.createQuery("from User where login=:login");
         queryUser_Id.setParameter("login", login);
         User user = (User) queryUser_Id.list().get(0);
@@ -92,17 +90,18 @@ public class UserHibernateImpl implements UserDAO {
 
         List<Book> bookList = new ArrayList<>();
         for(Integer book_id: book_idList){
-            session.getTransaction().begin();
+
             Book book = (Book) session.get(Book.class, book_id);
             bookList.add(book);
-            session.getTransaction().commit();
+
         }
-        HibernateUtil.getSessionFactory().close();
+
         return bookList;
     }
 
     @Override
     public boolean deleteUsersBook(String title, String login) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Query queryBook_Id = session.createQuery("from Book where title=:title");
         queryBook_Id.setParameter("title", title);
         Book book = (Book) queryBook_Id.list().get(0);
@@ -122,17 +121,16 @@ public class UserHibernateImpl implements UserDAO {
         request.setLibrary(0);
 
         System.out.println(request.getRequest_id());
-
         session.getTransaction().begin();
         session.merge(request);
         session.getTransaction().commit();
-
         changeBookStatus(title);
         return false;
     }
 
     @Override
     public void changeBookStatus(String title) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Query queryBook = session.createQuery("from Book where title=:title");
         queryBook.setParameter("title", title);
         Book book = (Book) queryBook.list().get(0);
@@ -140,10 +138,8 @@ public class UserHibernateImpl implements UserDAO {
         if(book != null){
             book.setBusy(0);
         }
-
         session.getTransaction().begin();
         session.merge(book);
         session.getTransaction().commit();
-        HibernateUtil.getSessionFactory().close();
     }
 }
