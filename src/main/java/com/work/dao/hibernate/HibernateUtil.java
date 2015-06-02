@@ -2,13 +2,12 @@ package com.work.dao.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.engine.internal.TwoPhaseLoad;
 
 /**
  * Created by Eugine Sokirka on 29.05.2015.
  */
 public class HibernateUtil {
-    private static final SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
 
     static {
         try{
